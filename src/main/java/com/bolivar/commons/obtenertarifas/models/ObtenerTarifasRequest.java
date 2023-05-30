@@ -1,4 +1,4 @@
-package com.bolivar.commons.obtenerresultado.models;
+package com.bolivar.commons.obtenertarifas.models;
 
 
 import lombok.*;
@@ -8,7 +8,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ObtenerResultadoRequest {
+public class ObtenerTarifasRequest {
 
     private String var;
 }
