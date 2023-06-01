@@ -10,5 +10,9 @@ import lombok.*;
 @AllArgsConstructor
 public class ObtenerTarifasRequest {
 
-    private String var;
+    private String ramoCodigoSiab;
+    private String productoCodigoSiab;
+    private Integer causaCodigoSiab;
+    private Integer originDestinationId;
+    private Integer codigoSiab;
 }

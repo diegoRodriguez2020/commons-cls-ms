@@ -1,6 +1,6 @@
 package com.bolivar.commons.obtenertarifas.services;
 
-import com.bolivar.commons.commons.repositories.GetTariffsRepository;
+import com.bolivar.commons.commons.repositories.GetTariffsRepositoryImpl;
 import com.bolivar.commons.obtenertarifas.dao.GetTariffDao;
 import com.bolivar.commons.obtenertarifas.dao.ObtenerTarifasDao;
 import com.bolivar.commons.commons.repositories.LogisticaTariffsRepository;
@@ -17,12 +17,12 @@ public class ObtenerTarifasServiceImpl implements ObtenerTarifasService {
 
     private LogisticaTariffsRepository logisticaTariffsRepository;
 
-    private GetTariffsRepository getTariffsRepository;
+    private GetTariffsRepositoryImpl getTariffsRepository;
 
     /**
      * Constructor method for object instantiation
      */
-    public ObtenerTarifasServiceImpl(LogisticaTariffsRepository logisticaTariffsRepository, GetTariffsRepository getTariffsRepository) {
+    public ObtenerTarifasServiceImpl(LogisticaTariffsRepository logisticaTariffsRepository, GetTariffsRepositoryImpl getTariffsRepository) {
         this.logisticaTariffsRepository = logisticaTariffsRepository;
         this.getTariffsRepository= getTariffsRepository;
     }
@@ -37,6 +37,6 @@ public class ObtenerTarifasServiceImpl implements ObtenerTarifasService {
 
     @Override
     public List<GetTariffDao> obtenerVista(ObtenerTarifasRequest requestModel) {
-        return getTariffsRepository.findTariff("RAMO_1", "PRODUCTO_1", 1,1,102);
+        return getTariffsRepository.findTariff(requestModel.getRamoCodigoSiab(), requestModel.getProductoCodigoSiab(), requestModel.getCausaCodigoSiab(),requestModel.getOriginDestinationId(),requestModel.getCodigoSiab());
     }
 }

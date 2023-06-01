@@ -28,4 +28,14 @@ public class GetTariffDao {
     private Integer pricexKm;
     @Column(name = "ramo_codigo_siab")
     private String ramoCodigoSiab;
+    @Column(name = "producto_codigo_siab")
+    private String productoCodigoSiab;
+    @Column(name = "causa_codigo_siab")
+    private Integer causaCodigoSiab;
+    @Column(name = "origin_destination_id", nullable = true)
+    private Integer originDestinationId;
+    @Column(name = "codigo_siab")
+    private Integer codigoSiab;
+    @Column(name = "city_id")
+    private Integer cityId;
 }

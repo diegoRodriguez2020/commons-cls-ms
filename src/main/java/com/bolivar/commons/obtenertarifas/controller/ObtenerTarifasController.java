@@ -26,8 +26,21 @@ public class ObtenerTarifasController {
         return obtenerTarifasService.obtenerListadoTarifas(obtenerTarifasRequest);
     }
 
-    @GetMapping(path = "/test",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public List<GetTariffDao> obtenerVista(@RequestBody ObtenerTarifasRequest obtenerTarifasRequest){
+    @GetMapping(path = "/test")
+    public List<GetTariffDao> obtenerVista(
+            ObtenerTarifasRequest obtenerTarifasRequest
+            /*@RequestParam String ramoCodigoSiab,
+            @RequestParam String productoCodigoSiab,
+            @RequestParam Integer causaCodigoSiab,
+            @RequestParam Integer originDestinationId,
+            @RequestParam Integer codigoSiab*/
+    ){
+        /*ObtenerTarifasRequest obtenerTarifasRequest = ObtenerTarifasRequest.builder()
+                .ramoCodigoSiab(ramoCodigoSiab)
+                .productoCodigoSiab(productoCodigoSiab)
+                .causaCodigoSiab(causaCodigoSiab)
+                .originDestinationId(originDestinationId)
+                .codigoSiab(codigoSiab).build();*/
         return obtenerTarifasService.obtenerVista(obtenerTarifasRequest);
     }
 }

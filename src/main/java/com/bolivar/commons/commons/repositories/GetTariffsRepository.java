@@ -9,11 +9,17 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface GetTariffsRepository extends JpaRepository<GetTariffDao, Integer> {
-    @Override
-    List<GetTariffDao> findAll();
+public interface GetTariffsRepository {
+    /*@Override
+    List<GetTariffDao> findAll();*/
 
-    @Query(value = "SELECT * FROM get_tariff gtf WHERE gtf.ramo_codigo_siab = ?1 AND gtf.producto_codigo_siab = ?2 AND gtf.causa_codigo_siab = ?3 AND gtf.origin_destination_id = ?4 AND (gtf.codigo_siab = ?5 OR gtf.city_id IS NULL) ORDER BY gtf.city_id DESC NULLS LAST LIMIT 1", nativeQuery = true)
+    /*@Query(value = "SELECT * FROM get_tariff gtf WHERE gtf.ramo_codigo_siab = ?1 AND gtf.producto_codigo_siab = ?2 AND gtf.causa_codigo_siab = ?3 AND gtf.origin_destination_id = ?4 AND (gtf.codigo_siab = ?5 OR gtf.city_id IS NULL) ORDER BY gtf.city_id DESC NULLS LAST LIMIT 1", nativeQuery = true)
+    List<GetTariffDao> findTariff(@Param("ramo_codigo_siab") String ramoCodigoSiab,
+                                  @Param("producto_codigo_siab") String productoCodigoSiab,
+                                  @Param("causa_codigo_siab") Integer causaCodigoSiab,
+                                  @Param("origin_destination_id") Integer originDestinationId,
+                                  @Param("codigo_siab_city") Integer codigoSiabCity);*/
+
     List<GetTariffDao> findTariff(@Param("ramo_codigo_siab") String ramoCodigoSiab,
                                   @Param("producto_codigo_siab") String productoCodigoSiab,
                                   @Param("causa_codigo_siab") Integer causaCodigoSiab,
