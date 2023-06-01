@@ -1,5 +1,7 @@
 package com.bolivar.commons.obtenertarifas.services;
 
+import com.bolivar.commons.commons.repositories.GetTariffsRepository;
+import com.bolivar.commons.obtenertarifas.dao.GetTariffDao;
 import com.bolivar.commons.obtenertarifas.dao.ObtenerTarifasDao;
 import com.bolivar.commons.commons.repositories.LogisticaTariffsRepository;
 import com.bolivar.commons.obtenertarifas.models.ObtenerTarifasRequest;
@@ -15,11 +17,14 @@ public class ObtenerTarifasServiceImpl implements ObtenerTarifasService {
 
     private LogisticaTariffsRepository logisticaTariffsRepository;
 
+    private GetTariffsRepository getTariffsRepository;
+
     /**
      * Constructor method for object instantiation
      */
-    public ObtenerTarifasServiceImpl(LogisticaTariffsRepository logisticaTariffsRepository) {
+    public ObtenerTarifasServiceImpl(LogisticaTariffsRepository logisticaTariffsRepository, GetTariffsRepository getTariffsRepository) {
         this.logisticaTariffsRepository = logisticaTariffsRepository;
+        this.getTariffsRepository= getTariffsRepository;
     }
 
     /**
@@ -27,6 +32,11 @@ public class ObtenerTarifasServiceImpl implements ObtenerTarifasService {
      */
     @Override
     public List<ObtenerTarifasDao> obtenerListadoTarifas(ObtenerTarifasRequest requestModel) {
-        return logisticaTariffsRepository.getList();
+        return logisticaTariffsRepository.findAll();
+    }
+
+    @Override
+    public List<GetTariffDao> obtenerVista(ObtenerTarifasRequest requestModel) {
+        return getTariffsRepository.findTariff("RAMO_1", "PRODUCTO_1", 1,1,102);
     }
 }

@@ -1,5 +1,6 @@
 package com.bolivar.commons.obtenertarifas.controller;
 
+import com.bolivar.commons.obtenertarifas.dao.GetTariffDao;
 import com.bolivar.commons.obtenertarifas.dao.ObtenerTarifasDao;
 import com.bolivar.commons.obtenertarifas.models.ObtenerTarifasRequest;
 import com.bolivar.commons.obtenertarifas.services.ObtenerTarifasService;
@@ -23,5 +24,10 @@ public class ObtenerTarifasController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public List<ObtenerTarifasDao> obtener(@RequestBody ObtenerTarifasRequest obtenerTarifasRequest){
         return obtenerTarifasService.obtenerListadoTarifas(obtenerTarifasRequest);
+    }
+
+    @GetMapping(path = "/test",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public List<GetTariffDao> obtenerVista(@RequestBody ObtenerTarifasRequest obtenerTarifasRequest){
+        return obtenerTarifasService.obtenerVista(obtenerTarifasRequest);
     }
 }
