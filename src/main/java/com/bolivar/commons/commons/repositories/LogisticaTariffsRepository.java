@@ -1,13 +1,13 @@
 package com.bolivar.commons.commons.repositories;
 
 import com.bolivar.commons.obtenertarifas.dao.ObtenerTarifasDao;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Mapper
-public interface LogisticaTariffsRepository {
-    @Select("SELECT * FROM logistica.tariffs")
-    List<ObtenerTarifasDao> getList();
+@Repository
+public interface LogisticaTariffsRepository extends JpaRepository<ObtenerTarifasDao, Integer> {
+    @Override
+    List<ObtenerTarifasDao> findAll();
 }

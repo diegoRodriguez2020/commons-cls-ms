@@ -1,5 +1,6 @@
 package com.bolivar.commons.obtenertarifas.services;
 
+import com.bolivar.commons.obtenertarifas.dao.GetTariffDao;
 import com.bolivar.commons.obtenertarifas.dao.ObtenerTarifasDao;
 import com.bolivar.commons.obtenertarifas.models.ObtenerTarifasRequest;
 
@@ -20,4 +21,8 @@ public interface ObtenerTarifasService {
      * @return a ResponseEntity with the request response
      */
     List<ObtenerTarifasDao> obtenerListadoTarifas(ObtenerTarifasRequest requestModel);
+
+
+    List<GetTariffDao> obtenerVista(ObtenerTarifasRequest requestModel);
+
 }
