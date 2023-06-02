@@ -1,7 +1,6 @@
-package com.bolivar.commons.commons.repositories;
+package com.bolivar.commons.obtenertarifabasica.repository;
 
-import com.bolivar.commons.obtenertarifas.dao.GetTariffDao;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.bolivar.commons.obtenertarifabasica.dao.ObtenerTarifaBasicaDao;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -13,15 +12,16 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Repository
-public class GetTariffsRepositoryImpl implements GetTariffsRepository {
-
-    @Autowired
+public class VistaTarifaRepositoryImpl implements VistaTarifaRepository {
     private EntityManager entityManager;
+    public VistaTarifaRepositoryImpl(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
     @Override
-    public List<GetTariffDao> findTariff(String ramoCodigoSiab, String productoCodigoSiab, Integer causaCodigoSiab, Integer originDestinationId, Integer codigoSiabCity) {
+    public List<ObtenerTarifaBasicaDao> findBasicFee(String ramoCodigoSiab, String productoCodigoSiab, Integer causaCodigoSiab, Integer originDestinationId, Integer codigoSiabCity) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<GetTariffDao> query = builder.createQuery(GetTariffDao.class);
-        Root<GetTariffDao> root = query.from(GetTariffDao.class);
+        CriteriaQuery<ObtenerTarifaBasicaDao> query = builder.createQuery(ObtenerTarifaBasicaDao.class);
+        Root<ObtenerTarifaBasicaDao> root = query.from(ObtenerTarifaBasicaDao.class);
 
         Predicate dynamicPredicate = builder.conjunction();
 
@@ -29,7 +29,7 @@ public class GetTariffsRepositoryImpl implements GetTariffsRepository {
                 builder.equal(root.get("ramoCodigoSiab"), ramoCodigoSiab),
                 builder.equal(root.get("productoCodigoSiab"), productoCodigoSiab),
                 builder.equal(root.get("causaCodigoSiab"), causaCodigoSiab),
-                builder.or(builder.equal(root.get("codigoSiab"), codigoSiabCity),
+                builder.or(builder.equal(root.get("ciudadCodigoSiab"), codigoSiabCity),
                         builder.isNull(root.get("cityId"))));
 
         if (originDestinationId != null) {
@@ -40,7 +40,7 @@ public class GetTariffsRepositoryImpl implements GetTariffsRepository {
         query.select(root).where(dynamicPredicate)
                 .orderBy(builder.asc(builder.nullif(root.get("cityId"), -1)));
 
-        TypedQuery<GetTariffDao> typedQuery = entityManager.createQuery(query);
+        TypedQuery<ObtenerTarifaBasicaDao> typedQuery = entityManager.createQuery(query);
         typedQuery.setMaxResults(1);
 
         return typedQuery.getResultList();
