@@ -30,16 +30,13 @@ public class ActualizarTarifaAdicionalesAdicionalesImpl implements ActualizarTar
 
     @Override
     public ActualizarTarifaAdicionalesResponse getTotalFee(ActualizarTarifaAdicionalesRequest actualizarTarifaAdicionalesRequest) {
-        List<AdicionalEstandarDao> adicionalEstandarDao = new ArrayList<>();
-        for (TarifaAdicional adicional: actualizarTarifaAdicionalesRequest.getStandardAdditional()) {
-            adicionalEstandarDao.add(adicionalesEstandarRepository.getPrice(adicional.getCode()));
+        for (TarifaAdicional standard: actualizarTarifaAdicionalesRequest.getStandardAdditional()) {
+            standard.setValue(adicionalesEstandarRepository.getPrice(standard.getCode()).getPrice());
         }
-
-        List<AdicionalOperativoDao> adicionalOperativoDao = new ArrayList<>();
-        for (TarifaAdicional adicional: actualizarTarifaAdicionalesRequest.getOperativeAdditional()) {
-            adicionalOperativoDao.add(adicionalesOperativosRepository.getPrice(adicional.getCode()));
+        for (TarifaAdicional operative: actualizarTarifaAdicionalesRequest.getOperativeAdditional()) {
+            operative.setValue(adicionalesOperativosRepository.getPrice(operative.getCode()).getPrice());
         }
-        log.log(Level.INFO, "estándar {0} y operativo {1}", new Object[]{adicionalEstandarDao.toString(), adicionalOperativoDao.toString()});
+        log.log(Level.INFO, "consulta de valor de adicionales estándar y operativos {0}", new Object[]{actualizarTarifaAdicionalesRequest.toString()});
         return ActualizarTarifaAdicionalesResponse.builder().build();
     }
 }

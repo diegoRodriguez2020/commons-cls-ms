@@ -35,5 +35,18 @@ public class AdicionalesEstandarRepositoryImpl implements AdicionalesEstandarRep
         typedQuery.setMaxResults(1);
 
         return typedQuery.getSingleResult();
+
+
+      /*  Integer[] ids = {5, 8, 10}; // code
+
+        Predicate[] predicates = new Predicate[ids.length];
+        for (int i = 0; i < ids.length; i++) {
+            predicates[i] = builder.equal(root.get("id"), ids[i]);
+        }
+
+        Predicate finalPredicate = builder.or(predicates);
+
+        query.select(root).where(finalPredicate);*/
+
     }
 }
