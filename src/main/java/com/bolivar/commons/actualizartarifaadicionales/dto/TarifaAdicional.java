@@ -1,4 +1,4 @@
-package com.bolivar.commons.actualizarTarifa.dto;
+package com.bolivar.commons.actualizartarifaadicionales.dto;
 
 import lombok.Getter;
 import lombok.Setter;

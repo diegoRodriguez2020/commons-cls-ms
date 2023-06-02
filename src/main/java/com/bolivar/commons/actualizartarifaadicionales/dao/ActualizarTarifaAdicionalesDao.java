@@ -1,4 +1,4 @@
-package com.bolivar.commons.actualizarTarifa.dao;
+package com.bolivar.commons.actualizartarifaadicionales.dao;
 
 import lombok.Data;
 import org.hibernate.annotations.Immutable;
@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Entity
 @Immutable
 @Table(name="view_fee_additional_standards")
-public class ActualizarTarifaDao {
+public class ActualizarTarifaAdicionalesDao {
     @Id()
     @Column(name = "fee_additional_id")
     private Integer feeAdditionalId;

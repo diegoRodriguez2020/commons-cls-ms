@@ -1,6 +1,6 @@
-package com.bolivar.commons.actualizarTarifa.models;
+package com.bolivar.commons.actualizartarifaadicionales.models;
 
-import com.bolivar.commons.actualizarTarifa.dto.TarifaAdicional;
+import com.bolivar.commons.actualizartarifaadicionales.dto.TarifaAdicional;
 import lombok.*;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ActualizarTarifaRequest {
+public class ActualizarTarifaAdicionalesRequest {
 
     private String basicFee;
     private List<TarifaAdicional> standardAdditional;
