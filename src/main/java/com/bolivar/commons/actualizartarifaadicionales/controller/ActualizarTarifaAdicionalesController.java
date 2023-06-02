@@ -22,6 +22,7 @@ public class ActualizarTarifaAdicionalesController {
     @PostMapping(path = "/actualizartarifa", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ActualizarTarifaAdicionalesResponse getStandardView(
             @Valid @RequestBody ActualizarTarifaAdicionalesRequest actualizarTarifaAdicionalesRequest) {
-        return actualizarTarifaAdicionalesService.getTotalFee(actualizarTarifaAdicionalesRequest);
+        actualizarTarifaAdicionalesService.getTotalFee(actualizarTarifaAdicionalesRequest);
+        return ActualizarTarifaAdicionalesResponse.builder().build();
     }
 }

@@ -5,6 +5,7 @@ import lombok.*;
 @Builder
 @Setter
 @Getter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class ObtenerTarifaBasicaRequest {
