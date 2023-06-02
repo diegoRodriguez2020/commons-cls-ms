@@ -1,7 +1,6 @@
 package com.bolivar.commons.obtenertarifabasica.services;
 
 import com.bolivar.commons.obtenertarifabasica.dao.ObtenerTarifaBasicaDao;
-import com.bolivar.commons.obtenertarifabasica.models.ObtenerTarifaBasicaRequest;
 
 import java.util.List;
 
@@ -13,6 +12,6 @@ import java.util.List;
  * @since 01/09/2022
  */
 public interface ObtenerTarifaBasicaService {
-    List<ObtenerTarifaBasicaDao> getBasicFee(ObtenerTarifaBasicaRequest obtenerTarifaBasicaRequest);
+    List<ObtenerTarifaBasicaDao> getBasicFee(String ramoCodigoSiab, String productoCodigoSiab, Integer causaCodigoSiab, Integer originDestinationId, Integer codigoSiab);
 
 }

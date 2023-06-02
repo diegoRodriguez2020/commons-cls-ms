@@ -1,6 +1,6 @@
-package com.bolivar.commons.obtenertarifaestandar.repository;
+package com.bolivar.commons.actualizarTarifa.repository;
 
-import com.bolivar.commons.obtenertarifaestandar.dao.ObtenerTarifaEstandarDao;
+import com.bolivar.commons.actualizarTarifa.dao.ActualizarTarifaDao;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -18,10 +18,10 @@ public class VistaTarifaEstandarRepositoryImpl implements VistaTarifaEstandarRep
         this.entityManager = entityManager;
     }
     @Override
-    public List<ObtenerTarifaEstandarDao> findStandardFee(String ramoCodigoSiab, String productoCodigoSiab, Integer causaCodigoSiab, Integer originDestinationId, Integer codigoSiabCity) {
+    public List<ActualizarTarifaDao> findStandardFee(String ramoCodigoSiab, String productoCodigoSiab, Integer causaCodigoSiab, Integer originDestinationId, Integer codigoSiabCity) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<ObtenerTarifaEstandarDao> query = builder.createQuery(ObtenerTarifaEstandarDao.class);
-        Root<ObtenerTarifaEstandarDao> root = query.from(ObtenerTarifaEstandarDao.class);
+        CriteriaQuery<ActualizarTarifaDao> query = builder.createQuery(ActualizarTarifaDao.class);
+        Root<ActualizarTarifaDao> root = query.from(ActualizarTarifaDao.class);
 
         Predicate dynamicPredicate = builder.conjunction();
 
@@ -40,7 +40,7 @@ public class VistaTarifaEstandarRepositoryImpl implements VistaTarifaEstandarRep
         query.select(root).where(dynamicPredicate)
                 .orderBy(builder.asc(builder.nullif(root.get("cityId"), -1)));
 
-        TypedQuery<ObtenerTarifaEstandarDao> typedQuery = entityManager.createQuery(query);
+        TypedQuery<ActualizarTarifaDao> typedQuery = entityManager.createQuery(query);
         typedQuery.setMaxResults(1);
 
         return typedQuery.getResultList();

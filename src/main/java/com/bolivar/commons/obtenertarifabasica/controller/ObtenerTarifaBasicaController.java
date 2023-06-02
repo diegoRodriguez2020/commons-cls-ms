@@ -1,9 +1,7 @@
 package com.bolivar.commons.obtenertarifabasica.controller;
 
 import com.bolivar.commons.obtenertarifabasica.dao.ObtenerTarifaBasicaDao;
-import com.bolivar.commons.obtenertarifabasica.models.ObtenerTarifaBasicaRequest;
 import com.bolivar.commons.obtenertarifabasica.services.ObtenerTarifaBasicaService;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +19,11 @@ public class ObtenerTarifaBasicaController {
     }
     @GetMapping(path = "/tarifabasica")
     public List<ObtenerTarifaBasicaDao> getFeeView(
-            ObtenerTarifaBasicaRequest obtenerTarifaBasicaRequest) {
-        return obtenerTarifaBasicaService.getBasicFee(obtenerTarifaBasicaRequest);
+            @RequestParam String ramoCodigoSiab,
+            @RequestParam String productoCodigoSiab,
+            @RequestParam Integer causaCodigoSiab,
+            @RequestParam Integer originDestinationId,
+            @RequestParam Integer codigoSiab) {
+        return obtenerTarifaBasicaService.getBasicFee(ramoCodigoSiab, productoCodigoSiab, causaCodigoSiab, originDestinationId, codigoSiab);
     }
 }

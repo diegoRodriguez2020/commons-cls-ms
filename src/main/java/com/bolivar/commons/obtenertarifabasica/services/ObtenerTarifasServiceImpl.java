@@ -1,7 +1,6 @@
 package com.bolivar.commons.obtenertarifabasica.services;
 
 import com.bolivar.commons.obtenertarifabasica.dao.ObtenerTarifaBasicaDao;
-import com.bolivar.commons.obtenertarifabasica.models.ObtenerTarifaBasicaRequest;
 import com.bolivar.commons.obtenertarifabasica.repository.VistaTarifaRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +19,7 @@ public class ObtenerTarifasServiceImpl implements ObtenerTarifaBasicaService {
     }
 
     @Override
-    public List<ObtenerTarifaBasicaDao> getBasicFee(ObtenerTarifaBasicaRequest obtenerTarifaBasicaRequest) {
-        return vistaTarifaRepository.findBasicFee(obtenerTarifaBasicaRequest.getRamoCodigoSiab(), obtenerTarifaBasicaRequest.getProductoCodigoSiab(), obtenerTarifaBasicaRequest.getCausaCodigoSiab(), obtenerTarifaBasicaRequest.getOriginDestinationId(), obtenerTarifaBasicaRequest.getCiudadCodigoSiab());
+    public List<ObtenerTarifaBasicaDao> getBasicFee(String ramoCodigoSiab, String productoCodigoSiab, Integer causaCodigoSiab, Integer originDestinationId, Integer codigoSiab) {
+        return vistaTarifaRepository.findBasicFee(ramoCodigoSiab, productoCodigoSiab, causaCodigoSiab, originDestinationId, codigoSiab);
     }
 }
