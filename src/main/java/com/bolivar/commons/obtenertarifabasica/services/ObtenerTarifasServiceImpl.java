@@ -21,6 +21,26 @@ public class ObtenerTarifasServiceImpl implements ObtenerTarifaBasicaService {
 
     @Override
     public List<ObtenerTarifaBasicaDao> getBasicFee(ObtenerTarifaBasicaRequest obtenerTarifaBasicaRequest) {
-        return vistaTarifaRepository.findBasicFee(obtenerTarifaBasicaRequest.getRamoCodigoSiab(), obtenerTarifaBasicaRequest.getProductoCodigoSiab(), obtenerTarifaBasicaRequest.getCausaCodigoSiab(), obtenerTarifaBasicaRequest.getOriginDestinationId(), obtenerTarifaBasicaRequest.getCiudadCodigoSiab());
+        List<ObtenerTarifaBasicaDao> tarifaBasica = getTarifaBasica(obtenerTarifaBasicaRequest);
+        adjustTotalTarifaBase(tarifaBasica, obtenerTarifaBasicaRequest.getTotalKms());
+        return tarifaBasica;
+    }
+
+    private List<ObtenerTarifaBasicaDao> getTarifaBasica(ObtenerTarifaBasicaRequest obtenerTarifaBasicaRequest) {
+        return vistaTarifaRepository.findBasicFee(
+                obtenerTarifaBasicaRequest.getRamoCodigoSiab(),
+                obtenerTarifaBasicaRequest.getProductoCodigoSiab(),
+                obtenerTarifaBasicaRequest.getCausaCodigoSiab(),
+                obtenerTarifaBasicaRequest.getOriginDestinationId(),
+                obtenerTarifaBasicaRequest.getCiudadCodigoSiab()
+        );
+    }
+
+    private void adjustTotalTarifaBase(List<ObtenerTarifaBasicaDao> tarifaBasica, Integer totalKms) {
+        if (totalKms != null && totalKms > 0 && !tarifaBasica.isEmpty()) {
+            ObtenerTarifaBasicaDao firstTarifa = tarifaBasica.get(0);
+            Integer totalTarifaBase = firstTarifa.getFeePrice() + (firstTarifa.getFeePriceXKm() * totalKms);
+            firstTarifa.setFeePrice(totalTarifaBase);
+        }
     }
 }

@@ -13,4 +13,5 @@ public class ObtenerTarifaBasicaRequest {
     private Integer causaCodigoSiab;
     private Integer originDestinationId;
     private Integer ciudadCodigoSiab;
+    private Integer totalKms;
 }
