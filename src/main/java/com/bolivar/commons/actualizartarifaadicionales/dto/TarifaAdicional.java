@@ -8,5 +8,6 @@ import lombok.Setter;
 public class TarifaAdicional {
 
     String code;
+    String amount;
     String value;
 }

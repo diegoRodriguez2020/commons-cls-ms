@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ActualizarTarifaAdicionalesRequest {
 
-    private String basicFee;
+    private Integer feeId;
     private List<TarifaAdicional> standardAdditional;
-    private List<TarifaAdicional> operationalStandard;
+    private List<TarifaAdicional> operativeAdditional;
 }
