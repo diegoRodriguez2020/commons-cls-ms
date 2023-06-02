@@ -1,6 +1,7 @@
 package com.bolivar.commons.obtenertarifabasica.models;
 
 import lombok.*;
+
 @Builder
 @Setter
 @Getter
