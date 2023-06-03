@@ -9,7 +9,6 @@ import lombok.ToString;
 @ToString
 public class TarifaAdicional {
 
-    String code;
-    String amount;
-    Integer value;
+    Integer code;
+    Integer amount;
 }

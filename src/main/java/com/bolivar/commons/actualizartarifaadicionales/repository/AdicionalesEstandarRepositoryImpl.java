@@ -1,7 +1,7 @@
 package com.bolivar.commons.actualizartarifaadicionales.repository;
 
 import com.bolivar.commons.actualizartarifaadicionales.dao.AdicionalEstandarDao;
-import com.bolivar.commons.obtenertarifabasica.dao.ObtenerTarifaBasicaDao;
+import com.bolivar.commons.actualizartarifaadicionales.dto.TarifaAdicional;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -15,38 +15,31 @@ import java.util.List;
 @Repository
 public class AdicionalesEstandarRepositoryImpl implements AdicionalesEstandarRepository {
     private EntityManager entityManager;
+
     public AdicionalesEstandarRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
+
     @Override
-    public AdicionalEstandarDao getPrice(String code) {
+    public List<AdicionalEstandarDao> getPrice(List<TarifaAdicional> tarifaAdicional) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<AdicionalEstandarDao> query = builder.createQuery(AdicionalEstandarDao.class);
         Root<AdicionalEstandarDao> root = query.from(AdicionalEstandarDao.class);
 
-        Predicate dynamicPredicate = builder.conjunction();
-
-        dynamicPredicate = builder.and(dynamicPredicate,
-                builder.equal(root.get("id"), code));
-
-        query.select(root).where(dynamicPredicate);
-
-        TypedQuery<AdicionalEstandarDao> typedQuery = entityManager.createQuery(query);
-        typedQuery.setMaxResults(1);
-
-        return typedQuery.getSingleResult();
-
-
-      /*  Integer[] ids = {5, 8, 10}; // code
-
-        Predicate[] predicates = new Predicate[ids.length];
-        for (int i = 0; i < ids.length; i++) {
-            predicates[i] = builder.equal(root.get("id"), ids[i]);
+        Predicate[] predicates = new Predicate[tarifaAdicional.size()];
+        for (int index = 0; index < predicates.length; index++) {
+            predicates[index] = builder.equal(root.get("id"), tarifaAdicional.get(index).getCode());
         }
 
         Predicate finalPredicate = builder.or(predicates);
 
-        query.select(root).where(finalPredicate);*/
+        query.select(root).where(finalPredicate).orderBy(builder.asc(root.get("id")));
+
+        TypedQuery<AdicionalEstandarDao> typedQuery = entityManager.createQuery(query);
+
+
+        return typedQuery.getResultList();
+
 
     }
 }
