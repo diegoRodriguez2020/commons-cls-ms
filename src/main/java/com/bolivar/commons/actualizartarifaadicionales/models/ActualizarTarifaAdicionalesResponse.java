@@ -2,13 +2,17 @@ package com.bolivar.commons.actualizartarifaadicionales.models;
 
 import lombok.*;
 
-@Builder
+
 @Setter
 @Getter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class ActualizarTarifaAdicionalesResponse {
 
-    private String result;
+    private Integer baseFee;
+    private Integer standardFee;
+    private Integer operativeFee;
+    private Integer totalFee;
 
 }

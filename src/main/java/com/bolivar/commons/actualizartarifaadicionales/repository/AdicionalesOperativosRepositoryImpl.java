@@ -1,6 +1,8 @@
 package com.bolivar.commons.actualizartarifaadicionales.repository;
 
+import com.bolivar.commons.actualizartarifaadicionales.dao.AdicionalEstandarDao;
 import com.bolivar.commons.actualizartarifaadicionales.dao.AdicionalOperativoDao;
+import com.bolivar.commons.actualizartarifaadicionales.dto.TarifaAdicional;
 import com.bolivar.commons.obtenertarifabasica.dao.ObtenerTarifaBasicaDao;
 import org.springframework.stereotype.Repository;
 
@@ -15,25 +17,28 @@ import java.util.List;
 @Repository
 public class AdicionalesOperativosRepositoryImpl implements AdicionalesOperativosRepository {
     private EntityManager entityManager;
+
     public AdicionalesOperativosRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
+
     @Override
-    public AdicionalOperativoDao getPrice(String code) {
+    public List<AdicionalOperativoDao> getPrice(List<TarifaAdicional> tarifaAdicional) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<AdicionalOperativoDao> query = builder.createQuery(AdicionalOperativoDao.class);
         Root<AdicionalOperativoDao> root = query.from(AdicionalOperativoDao.class);
 
-        Predicate dynamicPredicate = builder.conjunction();
+        Predicate[] predicates = new Predicate[tarifaAdicional.size()];
+        for (int index = 0; index < predicates.length; index++) {
+            predicates[index] = builder.equal(root.get("id"), tarifaAdicional.get(index).getCode());
+        }
 
-        dynamicPredicate = builder.and(dynamicPredicate,
-                builder.equal(root.get("id"), code));
+        Predicate finalPredicate = builder.or(predicates);
 
-        query.select(root).where(dynamicPredicate);
+        query.select(root).where(finalPredicate).orderBy(builder.asc(root.get("id")));
 
         TypedQuery<AdicionalOperativoDao> typedQuery = entityManager.createQuery(query);
-        typedQuery.setMaxResults(1);
 
-        return typedQuery.getSingleResult();
+        return typedQuery.getResultList();
     }
 }

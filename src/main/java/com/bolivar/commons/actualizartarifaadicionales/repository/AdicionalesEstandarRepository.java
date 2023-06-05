@@ -1,10 +1,12 @@
 package com.bolivar.commons.actualizartarifaadicionales.repository;
 
 import com.bolivar.commons.actualizartarifaadicionales.dao.AdicionalEstandarDao;
-import org.springframework.data.repository.query.Param;
+import com.bolivar.commons.actualizartarifaadicionales.dto.TarifaAdicional;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface AdicionalesEstandarRepository {
-    AdicionalEstandarDao getPrice(@Param("id") String aditionalStandardCode);
+    List<AdicionalEstandarDao> getPrice(List<TarifaAdicional> tarifaAdicional);
 }
