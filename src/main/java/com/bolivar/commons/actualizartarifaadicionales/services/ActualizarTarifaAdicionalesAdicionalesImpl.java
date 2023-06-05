@@ -34,20 +34,17 @@ public class ActualizarTarifaAdicionalesAdicionalesImpl implements ActualizarTar
     @Override
     public ActualizarTarifaAdicionalesResponse getTotalFee(ActualizarTarifaAdicionalesRequest actualizarTarifaAdicionalesRequest) {
         ActualizarTarifaAdicionalesResponse response= new ActualizarTarifaAdicionalesResponse();
-        actualizarTarifaAdicionalesRequest.getStandardAdditional().sort(Comparator.comparing(TarifaAdicional::getCode));
-        actualizarTarifaAdicionalesRequest.getOperativeAdditional().sort(Comparator.comparing(TarifaAdicional::getCode));
+        int baseFee=0;
+        response.setBaseFee(baseFee);
         List<AdicionalEstandarDao> adicionalEstandarDao = adicionalesEstandarRepository.getPrice(actualizarTarifaAdicionalesRequest.getStandardAdditional());
         List<AdicionalOperativoDao> adicionalOperativoDao = adicionalesOperativosRepository.getPrice(actualizarTarifaAdicionalesRequest.getOperativeAdditional());
-        //Riesgo de que al realizar las consultas los datos lleguen en un orden diferente al solicitado.
-        //Riesgo de que al ordenar se altere el orden de los precios.
-        //Tal vez deberíamos devolver en el response datos de los precios.
+        //No deberíamos usar Integer sino Long, Double, BigDecimal
         //cambiar TarifaAdicional."code" por "id"
         int standardFee=utilities.calculateAdditionalStandard(actualizarTarifaAdicionalesRequest.getStandardAdditional(), adicionalEstandarDao);
         int operativeFee=utilities.calculateAdditionalOperative(actualizarTarifaAdicionalesRequest.getOperativeAdditional(), adicionalOperativoDao);
         response.setStandardFee(standardFee);
         response.setOperativeFee(operativeFee);
-        response.setTotalFee(utilities.calculateTotalFee(standardFee, operativeFee));
-
+        response.setTotalFee(utilities.calculateTotalFee(baseFee,standardFee, operativeFee));
         log.log(Level.INFO, "response: {0}", new Object[]{response.toString()});
         return response;
     }

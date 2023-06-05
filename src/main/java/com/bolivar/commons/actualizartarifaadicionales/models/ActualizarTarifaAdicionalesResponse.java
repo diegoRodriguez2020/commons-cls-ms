@@ -10,6 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 public class ActualizarTarifaAdicionalesResponse {
 
+    private Integer baseFee;
     private Integer standardFee;
     private Integer operativeFee;
     private Integer totalFee;

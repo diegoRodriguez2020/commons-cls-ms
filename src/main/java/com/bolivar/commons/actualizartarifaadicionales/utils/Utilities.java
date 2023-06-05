@@ -9,36 +9,48 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 public class Utilities {
-    public Integer calculateAdditionalOperative(List<TarifaAdicional> operativeAdditionalRequest, List<AdicionalOperativoDao> adicionalOperativoPrice) {
-        int totalOperativeFee = 0;
-        for (int index = 0; index < operativeAdditionalRequest.size(); index++) {
-            if (operativeAdditionalRequest.get(index).getAmount() != null && operativeAdditionalRequest.get(index).getAmount() > 0) {
-                totalOperativeFee += operativeAdditionalRequest.get(index).getAmount() * adicionalOperativoPrice.get(index).getPrice();
-            }else{
-                totalOperativeFee += adicionalOperativoPrice.get(index).getPrice();
-            }
-            System.out.println("totalOperativeFee: " + totalOperativeFee);
-        }
-        return totalOperativeFee;
-    }
-
-    public Integer calculateAdditionalStandard(List<TarifaAdicional> standardAdditional, List<AdicionalEstandarDao> adicionalEstandarPrice) {
+    public Integer calculateAdditionalOperative(List<TarifaAdicional> operativeAdditionalsRequest, List<AdicionalOperativoDao> operativeAdditionalsDataBase) {
         int totalStandardFee = 0;
-        for (int index = 0; index < standardAdditional.size(); index++) {
-            if (standardAdditional.get(index).getAmount() != null && standardAdditional.get(index).getAmount() > 0) {
-                totalStandardFee += standardAdditional.get(index).getAmount() * adicionalEstandarPrice.get(index).getPrice();
-            }else{
-                totalStandardFee += adicionalEstandarPrice.get(index).getPrice();
+        for (AdicionalOperativoDao adicionalOperativoDao : operativeAdditionalsDataBase) {
+            if (adicionalOperativoDao.getOperationId() == 1) {
+                totalStandardFee += adicionalOperativoDao.getPrice();
+            } else {
+                for (TarifaAdicional tarifaAdicional : operativeAdditionalsRequest) {
+                    if (Objects.equals(tarifaAdicional.getCode(), adicionalOperativoDao.getId())) {
+                        totalStandardFee += tarifaAdicional.getAmount() * adicionalOperativoDao.getPrice();
+                        operativeAdditionalsRequest.remove(tarifaAdicional);
+                        break;
+                    }
+                }
             }
             System.out.println("totalStandardFee: " + totalStandardFee);
         }
         return totalStandardFee;
     }
 
-    public Integer calculateTotalFee(int standardFee, int operativeFee) {
-        return standardFee+operativeFee;
+    public Integer calculateAdditionalStandard(List<TarifaAdicional> standardAdditionalsRequest, List<AdicionalEstandarDao> standardAdditionalsDataBase) {
+        int totalStandardFee = 0;
+        for (AdicionalEstandarDao adicionalEstandarDao : standardAdditionalsDataBase) {
+            if (adicionalEstandarDao.getOperationId() == 1) {
+                totalStandardFee += adicionalEstandarDao.getPrice();
+            } else {
+                for (TarifaAdicional tarifaAdicional : standardAdditionalsRequest) {
+                    if (Objects.equals(tarifaAdicional.getCode(), adicionalEstandarDao.getId())) {
+                        totalStandardFee += tarifaAdicional.getAmount() * adicionalEstandarDao.getPrice();
+                        standardAdditionalsRequest.remove(tarifaAdicional);
+                    }
+                }
+            }
+            System.out.println("totalStandardFee: " + totalStandardFee);
+        }
+        return totalStandardFee;
+    }
+
+    public Integer calculateTotalFee(int baseFee, int standardFee, int operativeFee) {
+        return baseFee+ standardFee + operativeFee;
     }
 }
