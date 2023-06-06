@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+}
+
+group 'com.sgb.adapters.api'
+version 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-undertow'
+    implementation project(':usecase')
+    implementation project(':model')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.data:spring-data-commons:2.6.2'
+    // implementation 'org.springframework.boot:spring-boot-starter-security:2.6.2'
+    implementation (group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.3.5.RELEASE')
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
