@@ -1,6 +1,17 @@
+buildscript {
+	ext {
+		springBootVersion = '2.7.12'
+		sonarVersion = '3.0'
+		jacocoVersion = '0.8.5'
+		lombokVersion = '1.18.22'
+	}
+}
+
 plugins {
+	id 'org.springframework.boot' version "${springBootVersion}"
+	id 'org.sonarqube' version "${sonarVersion}"
+	id 'jacoco'
 	id 'java'
-	id 'org.springframework.boot' version '2.7.12'
 	id 'io.spring.dependency-management' version '1.1.0'
 }
 
@@ -18,19 +29,99 @@ repositories {
 	mavenCentral()
 }
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-web-services'
-	implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.6.15.Final'
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.7.6'
-	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.28'
-	runtimeOnly 'org.postgresql:postgresql'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+allprojects {
+	repositories {
+		mavenCentral()
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+		mavenLocal {
+			url "https://segurosbolivar.jfrog.io/artifactory/commons-gradle-bolivar-core-error-handling-starter-local/"
+			credentials {
+				username "${artifactory_user}"
+				password "${artifactory_password}"
+			}
+		}
+		mavenLocal {
+			url "https://segurosbolivar.jfrog.io/artifactory/commons-gradle-bolivar-core-api-doc-starter-local/"
+			credentials {
+				username "${artifactory_user}"
+				password "${artifactory_password}"
+			}
+		}
+		mavenLocal {
+			url "https://segurosbolivar.jfrog.io/artifactory/jelpit-conjuntos-commons-dev-local/"
+			credentials {
+				username "${artifactory_user}"
+				password "${artifactory_password}"
+			}
+		}
+
+
+		maven {
+			url "https://segurosbolivar.jfrog.io/artifactory/jcenter"
+			credentials {
+				username "${artifactory_user}"
+				password "${artifactory_password}"
+			}
+		}
+	}
 }
 
+
+
+subprojects {
+	apply plugin: 'java'
+	apply plugin: 'jacoco'
+
+	sourceCompatibility = JavaVersion.VERSION_11
+
+	dependencies {
+		/*implementation 'org.springframework.boot:spring-boot-starter-validation'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		compileOnly "org.projectlombok:lombok:${lombokVersion}"
+		annotationProcessor  "org.projectlombok:lombok:${lombokVersion}"
+		testCompileOnly  "org.projectlombok:lombok:${lombokVersion}"
+		testAnnotationProcessor  "org.projectlombok:lombok:${lombokVersion}"
+		implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+		implementation 'org.mapstruct:mapstruct:1.5.2.Final'
+		annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.2.Final'
+		implementation(group: 'com.bolivar.error.handling', name: 'bolivar-core-error-handling-starter', version: '1.0.1.RELEASE')
+		implementation(group: 'com.bolivar.api.doc', name: 'bolivar-core-api-doc-starter', version: '1.0.0.RELEASE')
+		// implementation 'com.bolivar.jelpit.conjuntos.commons.lib:jelpit-conjuntos-commons-java-lib:1.0.0.RELEASE'
+		implementation 'org.apache.logging.log4j:log4j-api'
+		implementation 'org.json:json:20171018'
+		// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test
+		testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.7.3'
+		// https://mvnrepository.com/artifact/org.mockito/mockito-core
+		testImplementation 'org.mockito:mockito-core:3.7.0'
+		testImplementation 'junit:junit:4.13'
+		implementation 'org.springframework.boot:spring-boot-starter-web'
+		implementation 'org.springframework.boot:spring-boot-starter-web-services'
+		implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.6.15.Final'
+		implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.7.6'
+		runtimeOnly 'org.postgresql:postgresql'*/
+		implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+		implementation 'org.springframework.boot:spring-boot-starter-web'
+		implementation 'org.springframework.boot:spring-boot-starter-validation'
+		implementation 'org.springframework.boot:spring-boot-starter-web'
+		implementation 'org.springframework.boot:spring-boot-starter-web-services'
+		implementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '2.3.0'
+		implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.6.15.Final'
+		implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.7.6'
+		runtimeOnly 'org.postgresql:postgresql'
+		testImplementation 'org.springframework.boot:spring-boot-starter-test'
+		implementation group: 'com.zaxxer', name: 'HikariCP', version: '5.0.1'
+		compileOnly "org.projectlombok:lombok:${lombokVersion}"
+		annotationProcessor  "org.projectlombok:lombok:${lombokVersion}"
+		testCompileOnly  "org.projectlombok:lombok:${lombokVersion}"
+		testAnnotationProcessor  "org.projectlombok:lombok:${lombokVersion}"
+	}
+
+}
+
+/*
 tasks.named('test') {
 	useJUnitPlatform()
 }
+*/
