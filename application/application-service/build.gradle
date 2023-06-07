@@ -1,0 +1,30 @@
+
+plugins {
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+    id 'java'
+}
+buildDir = new File(rootProject.projectDir, "build/")
+dependencies {
+    implementation project( ':api-rest')
+    //implementation 'org.reactivecommons.utils:object-mapper:0.1.0'
+    implementation project(':usecase')
+    implementation 'org.springframework.boot:spring-boot-starter'
+    runtimeOnly('org.springframework.boot:spring-boot-devtools')
+   // compile(group: 'com.bolivar.error.handling', name: 'bolivar-core-error-handling-starter', version: '1.0.1.RELEASE')
+   // compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.3.5.RELEASE'
+}
+
+task explodedJar(type: Copy) {
+    with jar
+    into "${buildDir}/exploded"
+}
+jar {
+    // To disable the *-plain.jar
+    enabled = false
+}
+
+bootJar {
+    // Sets output jar name
+    archiveFileName = "${project.getParent().getName()}.${archiveExtension.get()}"
+}

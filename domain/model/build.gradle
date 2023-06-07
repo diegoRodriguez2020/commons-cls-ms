@@ -1,0 +1,37 @@
+apply plugin: 'java'
+apply plugin: 'jacoco'
+group 'com.sgb.users.usecase'
+version 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testImplementation 'junit:junit:4.13.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+tasks.withType(Test) {
+    finalizedBy jacocoTestReport
+}
+
+project.jacocoTestReport {
+    getExecutionData().setFrom(fileTree(buildDir).include("/jacoco/*.exec"))
+
+    reports {
+        xml.enabled true
+        csv.enabled true
+        html.enabled true
+    }
+}

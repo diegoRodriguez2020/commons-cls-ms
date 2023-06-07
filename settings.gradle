@@ -1,1 +1,9 @@
 rootProject.name = 'commons-cls-ms'
+include ':model'
+project(':model').projectDir = file('./domain/model')
+include ':usecase'
+project(':usecase').projectDir = file('./domain/usecase')
+include ':application-service'
+project(':application-service').projectDir=file('./application/application-service')
+include ':api-rest'
+project(':api-rest').projectDir = file('./infraestructure/adapters/api-rest')
