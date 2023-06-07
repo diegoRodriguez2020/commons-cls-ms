@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Entity
 @Immutable
 @Table(name="view_fees")
-public class ObtenerTarifaBasicaDao {
+public class BasicFeeDao {
     @Id()
     @Column(name = "product_id")
     private Integer productId;

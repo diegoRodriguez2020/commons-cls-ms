@@ -4,7 +4,7 @@ package com.cls.domain.ports.updatefee;
 import com.cls.domain.ports.updatefee.in.UpdateFee;
 import com.cls.domain.ports.updatefee.out.AdicionalesEstandarRepository;
 import com.cls.domain.ports.updatefee.out.AdicionalesOperativosRepository;
-import com.cls.domain.utilities.updatefee.Utilities;
+import com.cls.domain.utilities.commons.Utilities;
 import com.cls.model.dao.updatefee.AdicionalEstandarDao;
 import com.cls.model.dao.updatefee.AdicionalOperativoDao;
 import com.cls.model.request.updatefee.ActualizarTarifaAdicionalesRequest;

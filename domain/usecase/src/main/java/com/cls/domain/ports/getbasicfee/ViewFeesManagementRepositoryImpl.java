@@ -2,7 +2,7 @@ package com.cls.domain.ports.getbasicfee;
 
 
 import com.cls.domain.ports.getbasicfee.out.ViewFeesManagementRepository;
-import com.cls.model.dao.getbasicfee.ObtenerTarifaBasicaDao;
+import com.cls.model.dao.getbasicfee.BasicFeeDao;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -24,13 +24,13 @@ public class ViewFeesManagementRepositoryImpl implements ViewFeesManagementRepos
         this.entityManager = entityManager;
     }
     @Override
-    public List<ObtenerTarifaBasicaDao> findBasicFee(String ramoCodigoSiab, String productoCodigoSiab, Integer causaCodigoSiab, Integer originDestinationId, Integer codigoSiabCity) {
+    public List<BasicFeeDao> findBasicFee(String ramoCodigoSiab, String productoCodigoSiab, Integer causaCodigoSiab, Integer originDestinationId, Integer codigoSiabCity) {
 
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         log.log(Level.INFO, "ramoCodigoSiab [{0}]", new Object[]{ramoCodigoSiab});
-        CriteriaQuery<ObtenerTarifaBasicaDao> query = builder.createQuery(ObtenerTarifaBasicaDao.class);
+        CriteriaQuery<BasicFeeDao> query = builder.createQuery(BasicFeeDao.class);
         log.log(Level.INFO, "productoCodigoSiab [{0}]", new Object[]{productoCodigoSiab});
-        Root<ObtenerTarifaBasicaDao> root = query.from(ObtenerTarifaBasicaDao.class);
+        Root<BasicFeeDao> root = query.from(BasicFeeDao.class);
         log.log(Level.INFO, "causaCodigoSiab [{0}]", new Object[]{causaCodigoSiab});
         Predicate dynamicPredicate = builder.conjunction();
 
@@ -49,7 +49,7 @@ public class ViewFeesManagementRepositoryImpl implements ViewFeesManagementRepos
         query.select(root).where(dynamicPredicate)
                 .orderBy(builder.asc(builder.nullif(root.get("cityId"), -1)));
 
-        TypedQuery<ObtenerTarifaBasicaDao> typedQuery = entityManager.createQuery(query);
+        TypedQuery<BasicFeeDao> typedQuery = entityManager.createQuery(query);
         typedQuery.setMaxResults(1);
 
         return typedQuery.getResultList();

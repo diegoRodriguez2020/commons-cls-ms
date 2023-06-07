@@ -3,7 +3,7 @@ package com.cls.domain.ports.updatefee;
 
 import com.cls.domain.ports.updatefee.out.AdicionalesOperativosRepository;
 import com.cls.model.dao.updatefee.AdicionalOperativoDao;
-import com.cls.model.dto.updatefee.TarifaAdicional;
+import com.cls.model.dto.commons.AdditionalFee;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -23,14 +23,14 @@ public class AdicionalesOperativosRepositoryImpl implements AdicionalesOperativo
     }
 
     @Override
-    public List<AdicionalOperativoDao> getPrice(List<TarifaAdicional> tarifaAdicional) {
+    public List<AdicionalOperativoDao> getPrice(List<AdditionalFee> additionalFee) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<AdicionalOperativoDao> query = builder.createQuery(AdicionalOperativoDao.class);
         Root<AdicionalOperativoDao> root = query.from(AdicionalOperativoDao.class);
 
-        Predicate[] predicates = new Predicate[tarifaAdicional.size()];
+        Predicate[] predicates = new Predicate[additionalFee.size()];
         for (int index = 0; index < predicates.length; index++) {
-            predicates[index] = builder.equal(root.get("id"), tarifaAdicional.get(index).getCode());
+            predicates[index] = builder.equal(root.get("id"), additionalFee.get(index).getCode());
         }
 
         Predicate finalPredicate = builder.or(predicates);

@@ -1,7 +1,7 @@
 package com.cls.model.request.updatefee;
 
 
-import com.cls.model.dto.updatefee.TarifaAdicional;
+import com.cls.model.dto.commons.AdditionalFee;
 import lombok.*;
 
 import java.util.List;
@@ -20,6 +20,6 @@ public class ActualizarTarifaAdicionalesRequest {
     private Integer ciudadCodigoSiab;
     private Integer totalKms;
     private Integer feeId;
-    private List<TarifaAdicional> standardAdditional;
-    private List<TarifaAdicional> operativeAdditional;
+    private List<AdditionalFee> standardAdditional;
+    private List<AdditionalFee> operativeAdditional;
 }
