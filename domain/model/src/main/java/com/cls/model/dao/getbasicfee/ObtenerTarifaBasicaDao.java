@@ -1,4 +1,4 @@
-package com.model.dao;
+package com.cls.model.dao.getbasicfee;
 
 import lombok.Data;
 import org.hibernate.annotations.Immutable;

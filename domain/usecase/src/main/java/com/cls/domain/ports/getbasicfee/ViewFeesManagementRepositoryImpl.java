@@ -1,8 +1,8 @@
-package com.domain.ports;
+package com.cls.domain.ports.getbasicfee;
 
 
-import com.domain.ports.out.ViewFeesManagementRepository;
-import com.model.dao.ObtenerTarifaBasicaDao;
+import com.cls.domain.ports.getbasicfee.out.ViewFeesManagementRepository;
+import com.cls.model.dao.getbasicfee.ObtenerTarifaBasicaDao;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

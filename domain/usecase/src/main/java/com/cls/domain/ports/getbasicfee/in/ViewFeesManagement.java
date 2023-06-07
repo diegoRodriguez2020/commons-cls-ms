@@ -1,6 +1,6 @@
-package com.domain.ports.in;
+package com.cls.domain.ports.getbasicfee.in;
 
-import com.model.dao.ObtenerTarifaBasicaDao;
+import com.cls.model.dao.getbasicfee.ObtenerTarifaBasicaDao;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

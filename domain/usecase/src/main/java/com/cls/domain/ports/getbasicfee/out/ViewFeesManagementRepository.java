@@ -1,7 +1,7 @@
-package com.domain.ports.out;
+package com.cls.domain.ports.getbasicfee.out;
 
 
-import com.model.dao.ObtenerTarifaBasicaDao;
+import com.cls.model.dao.getbasicfee.ObtenerTarifaBasicaDao;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
