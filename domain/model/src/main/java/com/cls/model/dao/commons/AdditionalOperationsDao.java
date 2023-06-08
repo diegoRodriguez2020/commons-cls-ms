@@ -1,4 +1,4 @@
-package com.cls.model.dao.updatefee;
+package com.cls.model.dao.commons;
 
 import lombok.Data;
 import org.hibernate.annotations.Immutable;
@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Entity
 @Immutable
 @Table(name="additional_operations")
-public class AdicionalOperativoDao {
+public class AdditionalOperationsDao {
     @Id()
     @Column(name = "id")
     private Integer id;

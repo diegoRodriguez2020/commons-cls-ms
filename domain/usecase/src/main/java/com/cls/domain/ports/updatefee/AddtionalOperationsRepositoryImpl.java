@@ -1,8 +1,8 @@
 package com.cls.domain.ports.updatefee;
 
 
-import com.cls.domain.ports.updatefee.out.AdicionalesEstandarRepository;
-import com.cls.model.dao.updatefee.AdicionalEstandarDao;
+import com.cls.domain.ports.updatefee.out.AddtionalOperationsRepository;
+import com.cls.model.dao.commons.AdditionalOperationsDao;
 import com.cls.model.dto.commons.AdditionalFee;
 import org.springframework.stereotype.Repository;
 
@@ -15,18 +15,18 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
-public class AdicionalesEstandarRepositoryImpl implements AdicionalesEstandarRepository {
+public class AddtionalOperationsRepositoryImpl implements AddtionalOperationsRepository {
     private EntityManager entityManager;
 
-    public AdicionalesEstandarRepositoryImpl(EntityManager entityManager) {
+    public AddtionalOperationsRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
     @Override
-    public List<AdicionalEstandarDao> getPrice(List<AdditionalFee> additionalFee) {
+    public List<AdditionalOperationsDao> findOperationsList(List<AdditionalFee> additionalFee) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<AdicionalEstandarDao> query = builder.createQuery(AdicionalEstandarDao.class);
-        Root<AdicionalEstandarDao> root = query.from(AdicionalEstandarDao.class);
+        CriteriaQuery<AdditionalOperationsDao> query = builder.createQuery(AdditionalOperationsDao.class);
+        Root<AdditionalOperationsDao> root = query.from(AdditionalOperationsDao.class);
 
         Predicate[] predicates = new Predicate[additionalFee.size()];
         for (int index = 0; index < predicates.length; index++) {
@@ -37,11 +37,8 @@ public class AdicionalesEstandarRepositoryImpl implements AdicionalesEstandarRep
 
         query.select(root).where(finalPredicate).orderBy(builder.asc(root.get("id")));
 
-        TypedQuery<AdicionalEstandarDao> typedQuery = entityManager.createQuery(query);
-
+        TypedQuery<AdditionalOperationsDao> typedQuery = entityManager.createQuery(query);
 
         return typedQuery.getResultList();
-
-
     }
 }
