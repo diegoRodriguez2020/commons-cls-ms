@@ -89,6 +89,8 @@ subprojects {
 		testCompileOnly  "org.projectlombok:lombok:${lombokVersion}"
 		testAnnotationProcessor  "org.projectlombok:lombok:${lombokVersion}"
 		testImplementation group: 'junit', name: 'junit', version: '4.13.2'
+		implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.1'
+
 	}
 }
 

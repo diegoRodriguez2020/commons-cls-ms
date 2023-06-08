@@ -2,7 +2,7 @@ package com.cls.domain.ports.updatefee;
 
 
 import com.cls.domain.ports.updatefee.out.AddtionalOperationsRepository;
-import com.cls.model.dao.commons.AdditionalOperationsDao;
+import com.cls.model.entity.commons.AdditionalOperationEntity;
 import com.cls.model.dto.commons.AdditionalFee;
 import org.springframework.stereotype.Repository;
 
@@ -23,10 +23,10 @@ public class AddtionalOperationsRepositoryImpl implements AddtionalOperationsRep
     }
 
     @Override
-    public List<AdditionalOperationsDao> findOperationsList(List<AdditionalFee> additionalFee) {
+    public List<AdditionalOperationEntity> findOperationsList(List<AdditionalFee> additionalFee) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<AdditionalOperationsDao> query = builder.createQuery(AdditionalOperationsDao.class);
-        Root<AdditionalOperationsDao> root = query.from(AdditionalOperationsDao.class);
+        CriteriaQuery<AdditionalOperationEntity> query = builder.createQuery(AdditionalOperationEntity.class);
+        Root<AdditionalOperationEntity> root = query.from(AdditionalOperationEntity.class);
 
         Predicate[] predicates = new Predicate[additionalFee.size()];
         for (int index = 0; index < predicates.length; index++) {
@@ -37,7 +37,7 @@ public class AddtionalOperationsRepositoryImpl implements AddtionalOperationsRep
 
         query.select(root).where(finalPredicate).orderBy(builder.asc(root.get("id")));
 
-        TypedQuery<AdditionalOperationsDao> typedQuery = entityManager.createQuery(query);
+        TypedQuery<AdditionalOperationEntity> typedQuery = entityManager.createQuery(query);
 
         return typedQuery.getResultList();
     }

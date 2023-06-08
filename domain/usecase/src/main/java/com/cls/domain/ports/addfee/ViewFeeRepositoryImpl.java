@@ -1,8 +1,8 @@
 package com.cls.domain.ports.addfee;
 
 
-import com.cls.domain.ports.addfee.out.ViewFeesRepository;
-import com.cls.model.dao.addfee.ViewFeesDao;
+import com.cls.domain.ports.addfee.out.ViewFeeRepository;
+import com.cls.model.entity.addfee.ViewFeeEntity;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -15,22 +15,22 @@ import java.util.List;
 import java.util.logging.Level;
 
 @Repository
-public class ViewFeesRepositoryImpl implements ViewFeesRepository {
+public class ViewFeeRepositoryImpl implements ViewFeeRepository {
 
 
     private static final java.util.logging.Logger log=java.util.logging.Logger.getLogger("ViewFeesManagementRepositoryImpl");
     private EntityManager entityManager;
-    public ViewFeesRepositoryImpl(EntityManager entityManager) {
+    public ViewFeeRepositoryImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
     @Override
-    public List<ViewFeesDao> findFee(String ramoCodigoSiab, String productoCodigoSiab, Integer causaCodigoSiab, Integer originDestinationId, Integer codigoSiabCity) {
+    public List<ViewFeeEntity> findFee(String ramoCodigoSiab, String productoCodigoSiab, Integer causaCodigoSiab, Integer originDestinationId, Integer codigoSiabCity) {
 
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         log.log(Level.INFO, "ramoCodigoSiab [{0}]", new Object[]{ramoCodigoSiab});
-        CriteriaQuery<ViewFeesDao> query = builder.createQuery(ViewFeesDao.class);
+        CriteriaQuery<ViewFeeEntity> query = builder.createQuery(ViewFeeEntity.class);
         log.log(Level.INFO, "productoCodigoSiab [{0}]", new Object[]{productoCodigoSiab});
-        Root<ViewFeesDao> root = query.from(ViewFeesDao.class);
+        Root<ViewFeeEntity> root = query.from(ViewFeeEntity.class);
         log.log(Level.INFO, "causaCodigoSiab [{0}]", new Object[]{causaCodigoSiab});
         Predicate dynamicPredicate = builder.conjunction();
 
@@ -49,7 +49,7 @@ public class ViewFeesRepositoryImpl implements ViewFeesRepository {
         query.select(root).where(dynamicPredicate)
                 .orderBy(builder.asc(builder.nullif(root.get("cityId"), -1)));
 
-        TypedQuery<ViewFeesDao> typedQuery = entityManager.createQuery(query);
+        TypedQuery<ViewFeeEntity> typedQuery = entityManager.createQuery(query);
         typedQuery.setMaxResults(1);
 
         return typedQuery.getResultList();

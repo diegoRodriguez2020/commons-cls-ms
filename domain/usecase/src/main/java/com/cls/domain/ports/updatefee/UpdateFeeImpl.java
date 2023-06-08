@@ -5,8 +5,8 @@ import com.cls.domain.ports.updatefee.in.UpdateFee;
 import com.cls.domain.ports.updatefee.out.AdditionalStandardsRepository;
 import com.cls.domain.ports.updatefee.out.AddtionalOperationsRepository;
 import com.cls.domain.ports.commons.utilities.FeeCalculator;
-import com.cls.model.dao.commons.AdditionalStandardsDao;
-import com.cls.model.dao.commons.AdditionalOperationsDao;
+import com.cls.model.entity.commons.AdditionalStandardEntity;
+import com.cls.model.entity.commons.AdditionalOperationEntity;
 import com.cls.model.request.updatefee.ActualizarTarifaAdicionalesRequest;
 import com.cls.model.response.updatefee.ActualizarTarifaAdicionalesResponse;
 import org.springframework.stereotype.Service;
@@ -35,18 +35,18 @@ public class UpdateFeeImpl implements UpdateFee {
     @Override
     public ActualizarTarifaAdicionalesResponse getTotalFee(ActualizarTarifaAdicionalesRequest actualizarTarifaAdicionalesRequest) {
         ActualizarTarifaAdicionalesResponse response= new ActualizarTarifaAdicionalesResponse();
-        int baseFee=0;
+      /*  int baseFee=0;
         response.setBaseFee(baseFee);
-        List<AdditionalStandardsDao> additionalStandardsDao = additionalStandardsRepository.findStandardsList(actualizarTarifaAdicionalesRequest.getStandardAdditional());
-        List<AdditionalOperationsDao> additionalOperationsDao = addtionalOperationsRepository.findOperationsList(actualizarTarifaAdicionalesRequest.getOperativeAdditional());
+        List<AdditionalStandardEntity> additionalStandardEntity = additionalStandardsRepository.findStandardsList(actualizarTarifaAdicionalesRequest.getStandardAdditional());
+        List<AdditionalOperationEntity> additionalOperationEntity = addtionalOperationsRepository.findOperationsList(actualizarTarifaAdicionalesRequest.getOperativeAdditional());
         //No deberíamos usar Integer sino Long, Double, BigDecimal
         //cambiar TarifaAdicional."code" por "id"
-        int standardFee= feeCalculator.calculateTotalAdditionalStandardsFee(actualizarTarifaAdicionalesRequest.getStandardAdditional(), additionalStandardsDao);
-        int operativeFee= feeCalculator.calculateTotalAdditionalOperationsFee(actualizarTarifaAdicionalesRequest.getOperativeAdditional(), additionalOperationsDao);
+        int standardFee= feeCalculator.calculateTotalAdditionalStandardsFee(actualizarTarifaAdicionalesRequest.getStandardAdditional(), additionalStandardEntity);
+        int operativeFee= feeCalculator.calculateTotalAdditionalOperationsFee(actualizarTarifaAdicionalesRequest.getOperativeAdditional(), additionalOperationEntity);
         response.setStandardFee(standardFee);
         response.setOperativeFee(operativeFee);
         response.setTotalFee(feeCalculator.calculateTotalFee(baseFee,standardFee, operativeFee));
-        log.log(Level.INFO, "response: {0}", new Object[]{response.toString()});
+        log.log(Level.INFO, "response: {0}", new Object[]{response.toString()});*/
         return response;
     }
 }

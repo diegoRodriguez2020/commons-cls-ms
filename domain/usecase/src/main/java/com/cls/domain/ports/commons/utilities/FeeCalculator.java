@@ -1,9 +1,12 @@
 package com.cls.domain.ports.commons.utilities;
 
 
-import com.cls.model.dao.addfee.ViewFeesDao;
-import com.cls.model.dao.commons.AdditionalStandardsDao;
-import com.cls.model.dao.commons.AdditionalOperationsDao;
+import com.cls.model.dto.addfee.ViewFee;
+import com.cls.model.dto.commons.AdditionalOperation;
+import com.cls.model.dto.commons.AdditionalStandard;
+import com.cls.model.entity.addfee.ViewFeeEntity;
+import com.cls.model.entity.commons.AdditionalStandardEntity;
+import com.cls.model.entity.commons.AdditionalOperationEntity;
 import com.cls.model.dto.commons.AdditionalFee;
 import org.springframework.stereotype.Component;
 
@@ -13,25 +16,27 @@ import java.util.Objects;
 @Component
 public class FeeCalculator {
 
-    public Integer calculateFee(List<ViewFeesDao> feeBasic, Integer totalKms) {
-        Integer feePrice=0;
+    public Integer calculateFee(List<ViewFee> feeBasic, Integer totalKms) {
+        System.out.println("totalKms: " + totalKms);
+        System.out.println("feeBasic.isEmpty(): " + feeBasic.isEmpty());
+        Integer feePrice = 0;
         if (totalKms != null && totalKms > 0 && !feeBasic.isEmpty()) {
-            ViewFeesDao firstFee = feeBasic.get(0);
+            ViewFee firstFee = feeBasic.get(0);
             feePrice = firstFee.getFeePrice() + (firstFee.getFeePriceXKm() * totalKms);
         }
         System.out.println("feePrice: " + feePrice);
         return feePrice;
     }
 
-    public Integer calculateTotalAdditionalOperationsFee(List<AdditionalFee> operativeAdditionalsRequest, List<AdditionalOperationsDao> operativeAdditionalsDataBase) {
+    public Integer calculateTotalAdditionalOperationsFee(List<AdditionalFee> operativeAdditionalsRequest, List<AdditionalOperation> operativeAdditionalsDataBase) {
         int totalStandardFee = 0;
-        for (AdditionalOperationsDao additionalOperationsDao : operativeAdditionalsDataBase) {
-            if (additionalOperationsDao.getOperationId() == 1) {
-                totalStandardFee += additionalOperationsDao.getPrice();
+        for (AdditionalOperation additionalOperation : operativeAdditionalsDataBase) {
+            if (additionalOperation.getOperationId() == 1) {
+                totalStandardFee += additionalOperation.getPrice();
             } else {
                 for (AdditionalFee additionalFee : operativeAdditionalsRequest) {
-                    if (Objects.equals(additionalFee.getCode(), additionalOperationsDao.getId())) {
-                        totalStandardFee += additionalFee.getAmount() * additionalOperationsDao.getPrice();
+                    if (Objects.equals(additionalFee.getCode(), additionalOperation.getId())) {
+                        totalStandardFee += additionalFee.getAmount() * additionalOperation.getPrice();
                         operativeAdditionalsRequest.remove(additionalFee);
                         break;
                     }
@@ -42,16 +47,17 @@ public class FeeCalculator {
         return totalStandardFee;
     }
 
-    public Integer calculateTotalAdditionalStandardsFee(List<AdditionalFee> standardAdditionalsRequest, List<AdditionalStandardsDao> standardAdditionalsDataBase) {
+    public Integer calculateTotalAdditionalStandardsFee(List<AdditionalFee> standardAdditionalsRequest, List<AdditionalStandard> standardAdditionalsDataBase) {
         int totalStandardFee = 0;
-        for (AdditionalStandardsDao additionalStandardsDao : standardAdditionalsDataBase) {
-            if (additionalStandardsDao.getOperationId() == 1) {
-                totalStandardFee += additionalStandardsDao.getPrice();
+        for (AdditionalStandard additionalStandard : standardAdditionalsDataBase) {
+            if (additionalStandard.getOperationId() == 1) {
+                totalStandardFee += additionalStandard.getPrice();
             } else {
                 for (AdditionalFee additionalFee : standardAdditionalsRequest) {
-                    if (Objects.equals(additionalFee.getCode(), additionalStandardsDao.getId())) {
-                        totalStandardFee += additionalFee.getAmount() * additionalStandardsDao.getPrice();
+                    if (Objects.equals(additionalFee.getCode(), additionalStandard.getId())) {
+                        totalStandardFee += additionalFee.getAmount() * additionalStandard.getPrice();
                         standardAdditionalsRequest.remove(additionalFee);
+                        break;
                     }
                 }
             }
@@ -61,6 +67,6 @@ public class FeeCalculator {
     }
 
     public Integer calculateTotalFee(int baseFee, int standardFee, int operativeFee) {
-        return baseFee+ standardFee + operativeFee;
+        return baseFee + standardFee + operativeFee;
     }
 }

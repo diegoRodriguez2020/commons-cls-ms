@@ -2,7 +2,7 @@ package com.cls.domain.ports.updatefee;
 
 
 import com.cls.domain.ports.updatefee.out.AdditionalStandardsRepository;
-import com.cls.model.dao.commons.AdditionalStandardsDao;
+import com.cls.model.entity.commons.AdditionalStandardEntity;
 import com.cls.model.dto.commons.AdditionalFee;
 import org.springframework.stereotype.Repository;
 
@@ -23,10 +23,10 @@ public class AdditionalStandardsRepositoryImpl implements AdditionalStandardsRep
     }
 
     @Override
-    public List<AdditionalStandardsDao> findStandardsList(List<AdditionalFee> additionalFee) {
+    public List<AdditionalStandardEntity> findStandardsList(List<AdditionalFee> additionalFee) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<AdditionalStandardsDao> query = builder.createQuery(AdditionalStandardsDao.class);
-        Root<AdditionalStandardsDao> root = query.from(AdditionalStandardsDao.class);
+        CriteriaQuery<AdditionalStandardEntity> query = builder.createQuery(AdditionalStandardEntity.class);
+        Root<AdditionalStandardEntity> root = query.from(AdditionalStandardEntity.class);
 
         Predicate[] predicates = new Predicate[additionalFee.size()];
         for (int index = 0; index < predicates.length; index++) {
@@ -37,7 +37,7 @@ public class AdditionalStandardsRepositoryImpl implements AdditionalStandardsRep
 
         query.select(root).where(finalPredicate).orderBy(builder.asc(root.get("id")));
 
-        TypedQuery<AdditionalStandardsDao> typedQuery = entityManager.createQuery(query);
+        TypedQuery<AdditionalStandardEntity> typedQuery = entityManager.createQuery(query);
 
 
         return typedQuery.getResultList();

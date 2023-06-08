@@ -1,4 +1,4 @@
-package com.cls.model.dao.addfee;
+package com.cls.model.entity.addfee;
 
 import lombok.Data;
 import org.hibernate.annotations.Immutable;
@@ -11,8 +11,8 @@ import javax.persistence.Table;
 @Data
 @Entity
 @Immutable
-@Table(name="view_fees")
-public class ViewFeesDao {
+@Table(name="view_fee")
+public class ViewFeeEntity {
     @Id()
     @Column(name = "product_id")
     private Integer productId;
