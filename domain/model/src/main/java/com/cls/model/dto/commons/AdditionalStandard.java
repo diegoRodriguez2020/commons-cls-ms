@@ -1,4 +1,4 @@
-package com.cls.model.dao.commons;
+package com.cls.model.dto.commons;
 
 import lombok.Data;
 import org.hibernate.annotations.Immutable;
@@ -9,19 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Data
-@Entity
-@Immutable
-@Table(name="additional_operations")
-public class AdditionalOperationsDao {
-    @Id()
-    @Column(name = "id")
+public class AdditionalStandard {
     private Integer id;
-    @Column(name = "name")
     private String name;
-    @Column(name = "price")
     private Integer price;
-    @Column(name = "operation_id")
     private Integer operationId;
-    @Column(name = "variable")
     private String variable;
 }
