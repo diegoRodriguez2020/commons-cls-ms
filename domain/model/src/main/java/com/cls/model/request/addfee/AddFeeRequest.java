@@ -1,6 +1,6 @@
-package com.cls.model.request.getbasicfee;
+package com.cls.model.request.addfee;
 
-import com.cls.model.dto.basicfee.BasicFee;
+import com.cls.model.dto.addfee.BasicFee;
 import com.cls.model.dto.commons.AdditionalFee;
 import lombok.*;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class FeeRequest {
+public class AddFeeRequest {
 
     private int authorizationNumber;
     private BasicFee basicFee;

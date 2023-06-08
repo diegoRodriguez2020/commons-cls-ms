@@ -1,4 +1,4 @@
-package com.cls.model.dto.basicfee;
+package com.cls.model.dto.addfee;
 
 import lombok.Getter;
 import lombok.Setter;
