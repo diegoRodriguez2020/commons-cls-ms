@@ -10,6 +10,10 @@ import com.cls.model.entity.commons.AdditionalOperationEntity;
 import com.cls.model.dto.commons.AdditionalFee;
 import org.springframework.stereotype.Component;
 
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -68,5 +72,9 @@ public class FeeCalculator {
 
     public Integer calculateTotalFee(int baseFee, int standardFee, int operativeFee) {
         return baseFee + standardFee + operativeFee;
+    }
+
+    public Date getDateISO8601(ZoneOffset zoneOffset, DateTimeFormatter dateTimeFormatter) {
+        return new Date(ZonedDateTime.now(zoneOffset).format(dateTimeFormatter));
     }
 }
