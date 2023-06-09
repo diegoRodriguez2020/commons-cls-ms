@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface FeeDetailRepository {
 
-   public FeeDetailEntity addFeeDetail(FeeDetailEntity feeDetailEntity);
+   public boolean addFeeDetail(FeeDetailEntity feeDetailEntity);
 
 }
