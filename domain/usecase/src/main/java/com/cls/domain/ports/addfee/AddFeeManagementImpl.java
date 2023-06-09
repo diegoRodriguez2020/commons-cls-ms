@@ -21,7 +21,7 @@ import com.cls.model.request.addfee.AddFeeRequest;
 import com.cls.model.response.addfee.AddFeeResponse;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -79,8 +79,8 @@ public class AddFeeManagementImpl implements AddFeeManagement {
         Date creationDateTime = feeCalculator.getDateISO8601(ZoneOffset.UTC, DateTimeFormatter.ISO_INSTANT);
         feeDetail.setCreatedAt(creationDateTime);
         feeDetail.setUpdatedAt(creationDateTime);
-        feeDetailRepository.addFeeDetail(feeDetailMapper.dtoToEntity(feeDetail));*/
-        return AddFeeResponse.builder().authorizationNumber(addFeeRequest.getAuthorizationNumber()).basicFee(String.valueOf(feeValue)).additionalStandardFee(String.valueOf(feeStandardValue)).additionalOperationsFee(String.valueOf(feeOperationsValue)).totalFee(String.valueOf(totalFeeValue)).build();
+        feeDetailRepository.addFeeDetail(feeDetailMapper.dtoToEntity(feeDetail));
+        return AddFeeResponse.builder().authorizationNumber(addFeeRequest.getAuthorizationNumber()).basicFee(feeValue).additionalStandardFee(feeStandardValue).additionalOperationsFee(feeOperationsValue).totalFee(totalFeeValue).build();
     }
 
 
