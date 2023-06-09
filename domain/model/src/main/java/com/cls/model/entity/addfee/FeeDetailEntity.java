@@ -29,11 +29,11 @@ public class FeeDetailEntity {
     private Integer feeTotal;
     @Column(name = "fee_log")
     private String feeLog;
-    @Column(name = "created_at")
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    @Column(name = "created_at", columnDefinition = "DATE")
+    //@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date createdAt;
-    @Column(name = "updated_at")
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    @Column(name = "updated_at", columnDefinition = "DATE")
+    //@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date updatedAt;
 
 }

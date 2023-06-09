@@ -8,11 +8,11 @@ import lombok.ToString;
 @Setter
 @ToString
 public class BasicFee {
-
-    String ramoCodigoSiab;
-    String productoCodigoSiab;
-    Integer causaCodigoSiab;
+    String branchCode;
+    String productCode;
+    Integer causeCode;
+    Integer serviceCode;
     Integer originDestinationId;
-    Integer codigoSiab;
     Integer totalKms;
+    Integer cityCode;
 }

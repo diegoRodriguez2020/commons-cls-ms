@@ -56,9 +56,8 @@ public class AddFeeManagementImpl implements AddFeeManagement {
 
     @Override
     public AddFeeResponse calculateFee(AddFeeRequest addFeeRequest) {
-        List<ViewFeeEntity> viewFeeEntity = viewFeeRepository.findFee(addFeeRequest.getBasicFee().getRamoCodigoSiab(), addFeeRequest.getBasicFee().getProductoCodigoSiab(), addFeeRequest.getBasicFee().getCausaCodigoSiab(), addFeeRequest.getBasicFee().getOriginDestinationId(), addFeeRequest.getBasicFee().getCodigoSiab());
+        List<ViewFeeEntity> viewFeeEntity = viewFeeRepository.findFee(addFeeRequest);
         List<ViewFee> viewFee = viewFeeMapper.entitiesToDto(viewFeeEntity);
-        System.out.println("viewFee: " + viewFee.size());
         Integer feeValue = feeCalculator.calculateFee(viewFee, addFeeRequest.getBasicFee().getTotalKms());
 
         List<AdditionalStandardEntity> additionalStandardsEntity = additionalStandardsRepository.findStandardsList(addFeeRequest.getStandardAdditional());
@@ -76,9 +75,9 @@ public class AddFeeManagementImpl implements AddFeeManagement {
         feeDetail.setFeeAdditionalPrice(feeStandardValue);
         feeDetail.setFeeTotal(totalFeeValue);
         feeDetail.setFeeLog("{}");
-        Date creationDateTime = feeCalculator.getDateISO8601(ZoneOffset.UTC, DateTimeFormatter.ISO_INSTANT);
-        feeDetail.setCreatedAt(creationDateTime);
-        feeDetail.setUpdatedAt(creationDateTime);
+        //Date creationDateTime = feeCalculator.getDateISO8601(ZoneOffset.UTC, DateTimeFormatter.ISO_INSTANT);
+        //feeDetail.setCreatedAt(creationDateTime);
+        //feeDetail.setUpdatedAt(creationDateTime);
         feeDetailRepository.addFeeDetail(feeDetailMapper.dtoToEntity(feeDetail));
         return AddFeeResponse.builder().authorizationNumber(addFeeRequest.getAuthorizationNumber()).basicFee(feeValue).additionalStandardFee(feeStandardValue).additionalOperationsFee(feeOperationsValue).totalFee(totalFeeValue).build();
     }

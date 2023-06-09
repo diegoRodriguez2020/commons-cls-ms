@@ -1,4 +1,4 @@
-package com.adapter.api.v1;
+package com.cls.adapter.api.v1;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
