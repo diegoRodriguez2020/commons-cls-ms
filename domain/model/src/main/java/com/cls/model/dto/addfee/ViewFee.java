@@ -4,14 +4,17 @@ import lombok.Data;
 
 @Data
 public class ViewFee {
-    private Integer productId;
-    private String productName;
-    private String ramoCodigoSiab;
-    private String productoCodigoSiab;
-    private Integer causaCodigoSiab;
+
+    private Integer serviceId;
+    private String serviceName;
+    private Integer branchCode;
+    private Integer productCode;
+    private Integer causeCode;
+    private Integer serviceCode;
     private Integer cityId;
-    private Integer ciudadCodigoSiab;
+    private Integer cityCode;
     private Integer originDestinationId;
+    private String originDestinationCode;
     private Integer feeId;
     private Integer feePrice;
     private String cityName;

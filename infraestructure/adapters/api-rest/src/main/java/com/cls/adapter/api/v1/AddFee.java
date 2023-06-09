@@ -1,4 +1,4 @@
-package com.adapter.api.v1;
+package com.cls.adapter.api.v1;
 
 
 import com.cls.domain.ports.addfee.in.AddFeeManagement;
@@ -22,7 +22,7 @@ public class AddFee {
         this.addFeeManagement = addFeeManagement;
     }
 
-    @PostMapping (path = "/tarifabasicas", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping (path = "/tarifa", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AddFeeResponse> addFee(@RequestBody @Valid AddFeeRequest addFeeRequest) {
         return ResponseEntity.ok(addFeeManagement.calculateFee(addFeeRequest));
     }

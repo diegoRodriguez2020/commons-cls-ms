@@ -14,29 +14,33 @@ import javax.persistence.Table;
 @Table(name="view_fee")
 public class ViewFeeEntity {
     @Id()
-    @Column(name = "product_id")
-    private Integer productId;
-    @Column(name = "product_name")
-    private String productName;
-    @Column(name = "ramo_codigo_siab")
-    private String ramoCodigoSiab;
-    @Column(name = "producto_codigo_siab")
-    private String productoCodigoSiab;
-    @Column(name = "causa_codigo_siab")
-    private Integer causaCodigoSiab;
+    @Column(name = "service_id")
+    private Integer serviceId;
+    @Column(name = "service_name")
+    private String serviceName;
+    @Column(name = "branch_code")
+    private Integer branchCode;
+    @Column(name = "product_code")
+    private Integer productCode;
+    @Column(name = "cause_code")
+    private Integer causeCode;
+    @Column(name = "service_code")
+    private Integer serviceCode;
     @Column(name = "city_id")
     private Integer cityId;
-    @Column(name = "ciudad_codigo_siab") //¿?
-    private Integer ciudadCodigoSiab;
+    @Column(name = "city_code")
+    private Integer cityCode;
     @Column(name = "origin_destination_id")
     private Integer originDestinationId;
+    @Column(name = "origin_destination_code")
+    private String originDestinationCode;
     @Column(name = "fee_id")
     private Integer feeId;
     @Column(name = "fee_price")
     private Integer feePrice;
     @Column(name = "city_name")
     private String cityName;
-    @Column(name = "origindestination_name")//corregir en la tabla
+    @Column(name = "origindestination_name")
     private String originDestinationName;
     @Column(name = "fee_pricexkm")
     private Integer feePriceXKm;
