@@ -16,6 +16,10 @@ public class ViewFeeMapper {
         this.modelMapper = modelMapper;
     }
 
+    public ViewFee entityToDto(ViewFeeEntity entity) {
+        return modelMapper.map(entity, ViewFee.class);
+    }
+
     public List<ViewFee> entitiesToDto(List<ViewFeeEntity> entities) {
         List<ViewFee> vieeFees= new ArrayList<>();
         for (ViewFeeEntity entity : entities) {

@@ -25,7 +25,7 @@ public class ViewFeeRepositoryImpl implements ViewFeeRepository {
         this.entityManager = entityManager;
     }
     @Override
-    public List<ViewFeeEntity>  findFee(AddFeeRequest addFeeRequest) {
+    public ViewFeeEntity  findFee(AddFeeRequest addFeeRequest) {
 
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         log.log(Level.INFO, "getBranchCode [{0}]", new Object[]{addFeeRequest.getBasicFee().getBranchCode()});
@@ -54,6 +54,6 @@ public class ViewFeeRepositoryImpl implements ViewFeeRepository {
         TypedQuery<ViewFeeEntity> typedQuery = entityManager.createQuery(query);
         typedQuery.setMaxResults(1);
 
-        return typedQuery.getResultList();
+        return typedQuery.getSingleResult();
     }
 }
