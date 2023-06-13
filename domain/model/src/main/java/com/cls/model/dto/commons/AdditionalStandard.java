@@ -1,18 +1,14 @@
 package com.cls.model.dto.commons;
 
 import lombok.Data;
-import org.hibernate.annotations.Immutable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.math.BigDecimal;
 
 @Data
 public class AdditionalStandard {
     private Integer id;
     private String name;
-    private Integer price;
+    private BigDecimal price;
     private Integer operationId;
     private String variable;
 }

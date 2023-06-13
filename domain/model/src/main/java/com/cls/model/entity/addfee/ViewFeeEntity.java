@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -37,7 +38,7 @@ public class ViewFeeEntity {
     @Column(name = "fee_id")
     private Integer feeId;
     @Column(name = "fee_price")
-    private Double feePrice;
+    private BigDecimal feePrice;
     @Column(name = "city_name")
     private String cityName;
     @Column(name = "origin_destination_name")

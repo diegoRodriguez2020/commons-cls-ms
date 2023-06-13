@@ -69,9 +69,9 @@ public class AddFeeManagementImpl implements AddFeeManagement {
         FeeDetail feeDetail = new FeeDetail();
         feeDetail.setAuthorizationNumber(addFeeRequest.getAuthorizationNumber());
         feeDetail.setFeeId(viewFee.getFeeId());
-        feeDetail.setFeeBasicPrice(String.valueOf(feeValue));
-        feeDetail.setFeeAdditionalPrice(String.valueOf(feeStandardValue));
-        feeDetail.setFeeTotal(String.valueOf(totalFeeValue));
+        feeDetail.setFeeBasicPrice(feeValue);
+        feeDetail.setFeeAdditionalPrice(feeStandardValue);
+        feeDetail.setFeeTotal(totalFeeValue);
         feeDetail.setFeeLog("{}");
         feeDetailRepository.addFeeDetail(feeDetailMapper.dtoToEntity(feeDetail));
         return AddFeeResponse.builder().authorizationNumber(addFeeRequest.getAuthorizationNumber()).basicFee(String.valueOf(feeValue)).additionalStandardFee(String.valueOf(feeStandardValue)).additionalOperationsFee(String.valueOf(feeOperationsValue)).totalFee(String.valueOf(totalFeeValue)).build();

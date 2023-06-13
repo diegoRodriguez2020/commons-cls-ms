@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
@@ -24,11 +25,11 @@ public class FeeDetailEntity {
     @Column(name = "fee_id")
     private Integer feeId;
     @Column(name = "fee_basic_price")
-    private Integer feeBasicPrice;
+    private BigDecimal feeBasicPrice;
     @Column(name = "fee_additional_price")
-    private Integer feeAdditionalPrice;
+    private BigDecimal feeAdditionalPrice;
     @Column(name = "fee_total")
-    private Integer feeTotal;
+    private BigDecimal feeTotal;
     @Column(name = "fee_log")
     private String feeLog;
     @Column(name = "created_at", columnDefinition = "DATE")
