@@ -4,20 +4,20 @@ import com.cls.domain.ports.addfee.out.FeeDetailRepository;
 import com.cls.model.entity.addfee.FeeDetailEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.criteria.CriteriaBuilder;
-
+@Transactional
 @Repository
 public class FeeDetailRepositoryImpl implements FeeDetailRepository {
 
     private EntityManager entityManager;
     private static final Logger logger = LogManager.getLogger(FeeDetailRepositoryImpl.class);
-    public FeeDetailRepositoryImpl(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    public FeeDetailRepositoryImpl(EntityManagerFactory emf) {
+        this.entityManager = emf.createEntityManager();
     }
 
     @Override
@@ -30,6 +30,7 @@ public class FeeDetailRepositoryImpl implements FeeDetailRepository {
             logger.info("success feedtail");
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
 
         if (builder != null && builder.isActive()){
             builder.rollback();
