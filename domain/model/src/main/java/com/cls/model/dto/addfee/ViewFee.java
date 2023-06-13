@@ -2,6 +2,8 @@ package com.cls.model.dto.addfee;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class ViewFee {
 
@@ -16,7 +18,7 @@ public class ViewFee {
     private Integer originDestinationId;
     private String originDestinationCode;
     private Integer feeId;
-    private Integer feePrice;
+    private BigDecimal feePrice;
     private String cityName;
     private String originDestinationName;
     private Integer feePriceXKm;

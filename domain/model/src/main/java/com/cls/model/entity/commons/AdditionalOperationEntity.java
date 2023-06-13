@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -19,7 +20,7 @@ public class AdditionalOperationEntity {
     @Column(name = "name")
     private String name;
     @Column(name = "price")
-    private Integer price;
+    private BigDecimal price;
     @Column(name = "operation_id")
     private Integer operationId;
     @Column(name = "variable")

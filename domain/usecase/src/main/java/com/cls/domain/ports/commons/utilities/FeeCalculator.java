@@ -4,9 +4,6 @@ package com.cls.domain.ports.commons.utilities;
 import com.cls.model.dto.addfee.ViewFee;
 import com.cls.model.dto.commons.AdditionalOperation;
 import com.cls.model.dto.commons.AdditionalStandard;
-import com.cls.model.entity.addfee.ViewFeeEntity;
-import com.cls.model.entity.commons.AdditionalStandardEntity;
-import com.cls.model.entity.commons.AdditionalOperationEntity;
 import com.cls.model.dto.commons.AdditionalFee;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +23,7 @@ public class FeeCalculator {
         if (totalKms != null && totalKms > 0) {
             feePrice = BigDecimal.valueOf(feeBasic.getFeePriceXKm()).multiply(BigDecimal.valueOf(totalKms));
         }
-        feePrice=feePrice.add(BigDecimal.valueOf(feeBasic.getFeePrice()));
+        feePrice=feePrice.add(feeBasic.getFeePrice());
         System.out.println("feePrice: " + feePrice);
         return feePrice;
     }
@@ -35,11 +32,11 @@ public class FeeCalculator {
         BigDecimal totalStandardFee = new BigDecimal(0);
         for (AdditionalOperation additionalOperation : operativeAdditionalsDataBase) {
             if (additionalOperation.getOperationId() == 1) {
-                totalStandardFee=totalStandardFee.add(BigDecimal.valueOf(additionalOperation.getPrice()));
+                totalStandardFee=totalStandardFee.add(additionalOperation.getPrice());
             } else {
                 for (AdditionalFee additionalFee : operativeAdditionalsRequest) {
                     if (Objects.equals(additionalFee.getCode(), additionalOperation.getId())) {
-                        totalStandardFee=totalStandardFee.add(BigDecimal.valueOf(additionalFee.getAmount()).multiply(BigDecimal.valueOf(additionalOperation.getPrice())));
+                        totalStandardFee=totalStandardFee.add(BigDecimal.valueOf(additionalFee.getAmount()).multiply(additionalOperation.getPrice()));
                         operativeAdditionalsRequest.remove(additionalFee);
                         break;
                     }
@@ -54,11 +51,11 @@ public class FeeCalculator {
         BigDecimal totalStandardFee = new BigDecimal(0);
         for (AdditionalStandard additionalStandard : standardAdditionalsDataBase) {
             if (additionalStandard.getOperationId() == 1) {
-                totalStandardFee=totalStandardFee.add(BigDecimal.valueOf(additionalStandard.getPrice()));
+                totalStandardFee=totalStandardFee.add(additionalStandard.getPrice());
             } else {
                 for (AdditionalFee additionalFee : standardAdditionalsRequest) {
                     if (Objects.equals(additionalFee.getCode(), additionalStandard.getId())) {
-                        totalStandardFee=totalStandardFee.add(BigDecimal.valueOf(additionalFee.getAmount()).multiply(BigDecimal.valueOf(additionalStandard.getPrice())));
+                        totalStandardFee=totalStandardFee.add(BigDecimal.valueOf(additionalFee.getAmount()).multiply(additionalStandard.getPrice()));
                         standardAdditionalsRequest.remove(additionalFee);
                         break;
                     }
