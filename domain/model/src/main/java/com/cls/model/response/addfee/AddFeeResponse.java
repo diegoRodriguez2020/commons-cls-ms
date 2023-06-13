@@ -11,8 +11,8 @@ import lombok.*;
 public class AddFeeResponse {
 
     private int authorizationNumber;
-    private Integer basicFee;
-    private Integer additionalStandardFee;
-    private Integer additionalOperationsFee;
-    private Integer totalFee;
+    private String basicFee;
+    private String additionalStandardFee;
+    private String additionalOperationsFee;
+    private String totalFee;
 }

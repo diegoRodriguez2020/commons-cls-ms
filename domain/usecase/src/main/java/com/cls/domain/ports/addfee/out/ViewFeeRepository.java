@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface ViewFeeRepository {
 
-    List<ViewFeeEntity> findFee(AddFeeRequest addFeeRequest);
+    ViewFeeEntity findFee(AddFeeRequest addFeeRequest);
 
 }

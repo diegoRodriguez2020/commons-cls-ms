@@ -57,24 +57,24 @@ public class AddFeeManagementImpl implements AddFeeManagement {
 
     @Override
     public AddFeeResponse calculateFee(AddFeeRequest addFeeRequest) {
-        List<ViewFeeEntity> viewFeeEntity = viewFeeRepository.findFee(addFeeRequest);
-        List<ViewFee> viewFee = viewFeeMapper.entitiesToDto(viewFeeEntity);
-        Integer feeValue = feeCalculator.calculateFee(viewFee, addFeeRequest.getBasicFee().getTotalKms());
+        ViewFeeEntity viewFeeEntity = viewFeeRepository.findFee(addFeeRequest);
+        ViewFee viewFee = viewFeeMapper.entityToDto(viewFeeEntity);
+        BigDecimal feeValue = feeCalculator.calculateFee(viewFee, addFeeRequest.getBasicFee().getTotalKms());
 
         List<AdditionalStandardEntity> additionalStandardsEntity = additionalStandardsRepository.findStandardsList(addFeeRequest.getStandardAdditional());
         List<AdditionalOperationEntity> additionalOperationsEntity = addtionalOperationsRepository.findOperationsList(addFeeRequest.getOperativeAdditional());
         List<AdditionalStandard> additionalStandards = additionalStandardMapper.entitiesToDto(additionalStandardsEntity);
         List<AdditionalOperation> additionalOperations = additionalOperationMapper.entitiesToDto(additionalOperationsEntity);
-        Integer feeStandardValue = feeCalculator.calculateTotalAdditionalStandardsFee(addFeeRequest.getStandardAdditional(), additionalStandards);
-        Integer feeOperationsValue = feeCalculator.calculateTotalAdditionalOperationsFee(addFeeRequest.getOperativeAdditional(), additionalOperations);
+        BigDecimal feeStandardValue = feeCalculator.calculateTotalAdditionalStandardsFee(addFeeRequest.getStandardAdditional(), additionalStandards);
+        BigDecimal feeOperationsValue = feeCalculator.calculateTotalAdditionalOperationsFee(addFeeRequest.getOperativeAdditional(), additionalOperations);
 
-        Integer totalFeeValue = feeCalculator.calculateTotalFee(feeValue, feeStandardValue, feeOperationsValue);
-        FeeDetail feeDetail = new FeeDetail();
+        BigDecimal totalFeeValue = feeCalculator.calculateTotalFee(feeValue, feeStandardValue, feeOperationsValue);
+        /*FeeDetail feeDetail = new FeeDetail();
         feeDetail.setAuthorizationNumber(addFeeRequest.getAuthorizationNumber());
-        feeDetail.setFeeId(viewFee.get(0).getFeeId());
-        feeDetail.setFeeBasicPrice(feeValue);
-        feeDetail.setFeeAdditionalPrice(feeStandardValue);
-        feeDetail.setFeeTotal(totalFeeValue);
+        feeDetail.setFeeId(viewFee.getFeeId());
+        feeDetail.setFeeBasicPrice(String.valueOf(feeValue));
+        feeDetail.setFeeAdditionalPrice(String.valueOf(feeStandardValue));
+        feeDetail.setFeeTotal(String.valueOf(totalFeeValue));
         feeDetail.setFeeLog("{}");
         Date creationDateTime = feeCalculator.getDateISO8601(ZoneOffset.UTC, DateTimeFormatter.ISO_INSTANT);
         feeDetail.setCreatedAt(creationDateTime);
@@ -82,4 +82,34 @@ public class AddFeeManagementImpl implements AddFeeManagement {
         feeDetailRepository.addFeeDetail(feeDetailMapper.dtoToEntity(feeDetail));
         return AddFeeResponse.builder().authorizationNumber(addFeeRequest.getAuthorizationNumber()).basicFee(feeValue).additionalStandardFee(feeStandardValue).additionalOperationsFee(feeOperationsValue).totalFee(totalFeeValue).build();
     }
+
+
+
+    public AddFeeResponse updateFee(AddFeeRequest addFeeRequest) {
+        ViewFeeEntity viewFeeEntity = viewFeeRepository.findFee(addFeeRequest); //Se reemplaza por findFeeDetail
+        ViewFee viewFee = viewFeeMapper.entityToDto(viewFeeEntity); //Cambia la entidad por una FeeDetailEntity
+        BigDecimal feeValue = feeCalculator.calculateFee(viewFee, addFeeRequest.getBasicFee().getTotalKms());//No requerida
+
+        List<AdditionalStandardEntity> additionalStandardsEntity = additionalStandardsRepository.findStandardsList(addFeeRequest.getStandardAdditional());
+        List<AdditionalOperationEntity> additionalOperationsEntity = addtionalOperationsRepository.findOperationsList(addFeeRequest.getOperativeAdditional());
+        List<AdditionalStandard> additionalStandards = additionalStandardMapper.entitiesToDto(additionalStandardsEntity);
+        List<AdditionalOperation> additionalOperations = additionalOperationMapper.entitiesToDto(additionalOperationsEntity);
+        BigDecimal feeStandardValue = feeCalculator.calculateTotalAdditionalStandardsFee(addFeeRequest.getStandardAdditional(), additionalStandards);
+        BigDecimal feeOperationsValue = feeCalculator.calculateTotalAdditionalOperationsFee(addFeeRequest.getOperativeAdditional(), additionalOperations);
+
+        BigDecimal totalFeeValue = feeCalculator.calculateTotalFee(feeValue, feeStandardValue, feeOperationsValue);
+        /*FeeDetail feeDetail = new FeeDetail();
+        feeDetail.setAuthorizationNumber(addFeeRequest.getAuthorizationNumber());
+        feeDetail.setFeeId(viewFee.getFeeId());
+        feeDetail.setFeeBasicPrice(String.valueOf(feeValue));
+        feeDetail.setFeeAdditionalPrice(String.valueOf(feeStandardValue));
+        feeDetail.setFeeTotal(String.valueOf(totalFeeValue));
+        feeDetail.setFeeLog("{}");
+        Date creationDateTime = feeCalculator.getDateISO8601(ZoneOffset.UTC, DateTimeFormatter.ISO_INSTANT);
+        feeDetail.setCreatedAt(creationDateTime);
+        feeDetail.setUpdatedAt(creationDateTime);
+        feeDetailRepository.addFeeDetail(feeDetailMapper.dtoToEntity(feeDetail));*/
+        return AddFeeResponse.builder().authorizationNumber(addFeeRequest.getAuthorizationNumber()).basicFee(String.valueOf(feeValue)).additionalStandardFee(String.valueOf(feeStandardValue)).additionalOperationsFee(String.valueOf(feeOperationsValue)).totalFee(String.valueOf(totalFeeValue)).build();
+    }
+
 }
