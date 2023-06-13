@@ -37,10 +37,10 @@ public class ViewFeeEntity {
     @Column(name = "fee_id")
     private Integer feeId;
     @Column(name = "fee_price")
-    private Integer feePrice;
+    private Double feePrice;
     @Column(name = "city_name")
     private String cityName;
-    @Column(name = "origindestination_name")
+    @Column(name = "origin_destination_name")
     private String originDestinationName;
     @Column(name = "fee_pricexkm")
     private Integer feePriceXKm;

@@ -16,9 +16,9 @@ public class FeeDetail {
     private Integer id;
     private Integer authorizationNumber;
     private Integer feeId;
-    private Integer feeBasicPrice;
-    private Integer feeAdditionalPrice;
-    private Integer feeTotal;
+    private String feeBasicPrice;
+    private String feeAdditionalPrice;
+    private String feeTotal;
     private String feeLog;
     private Date createdAt;
     private Date updatedAt;
