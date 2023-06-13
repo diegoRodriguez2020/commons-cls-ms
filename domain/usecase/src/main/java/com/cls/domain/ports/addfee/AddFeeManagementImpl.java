@@ -22,7 +22,13 @@ import com.cls.model.response.addfee.AddFeeResponse;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 
 
 @Service
@@ -38,6 +44,7 @@ public class AddFeeManagementImpl implements AddFeeManagement {
     private AdditionalOperationMapper additionalOperationMapper;
     private FeeDetailMapper feeDetailMapper;
     private FeeCalculator feeCalculator;
+    private static final java.util.logging.Logger log=java.util.logging.Logger.getLogger("NOMBRE_CLASE");
 
 
     public AddFeeManagementImpl(ViewFeeRepository viewFeeRepository, FeeCalculator feeCalculator, AdditionalStandardsRepository additionalStandardsRepository, AddtionalOperationsRepository addtionalOperationsRepository, ViewFeeMapper viewFeeMapper, AdditionalStandardMapper additionalStandardMapper, AdditionalOperationMapper additionalOperationMapper, FeeDetailRepository feeDetailRepository, FeeDetailMapper feeDetailMapper) {
@@ -73,6 +80,18 @@ public class AddFeeManagementImpl implements AddFeeManagement {
         feeDetail.setFeeAdditionalPrice(feeStandardValue);
         feeDetail.setFeeTotal(totalFeeValue);
         feeDetail.setFeeLog("{}");
+       /* String creationDateTime = feeCalculator.getDateISO8601(ZoneOffset.UTC, DateTimeFormatter.ISO_INSTANT);
+        log.log(Level.INFO, "creationDateTime ---------------------------", creationDateTime);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        Date date = null;
+        try {
+           date =  sdf.parse(creationDateTime);
+        }catch (ParseException e) {
+            System.out.println("Error al convertir la fecha: " + e.getMessage());
+        }*/
+        Date fechaActual = new Date();
+        feeDetail.setCreatedAt(fechaActual);
+        feeDetail.setUpdatedAt(fechaActual);
         feeDetailRepository.addFeeDetail(feeDetailMapper.dtoToEntity(feeDetail));
         return AddFeeResponse.builder().authorizationNumber(addFeeRequest.getAuthorizationNumber()).basicFee(String.valueOf(feeValue)).additionalStandardFee(String.valueOf(feeStandardValue)).additionalOperationsFee(String.valueOf(feeOperationsValue)).totalFee(String.valueOf(totalFeeValue)).build();
     }

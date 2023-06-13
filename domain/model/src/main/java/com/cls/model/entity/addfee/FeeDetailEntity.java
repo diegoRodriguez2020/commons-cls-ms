@@ -10,6 +10,7 @@ import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -33,10 +34,8 @@ public class FeeDetailEntity {
     @Column(name = "fee_log")
     private String feeLog;
     @Column(name = "created_at", columnDefinition = "DATE")
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date createdAt;
     @Column(name = "updated_at", columnDefinition = "DATE")
-    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
-    private Date updatedAt;
+    private Date  updatedAt;
 
 }

@@ -70,7 +70,7 @@ public class FeeCalculator {
         return baseFee.add(standardFee.add(operativeFee));
     }
 
-    public Date getDateISO8601(ZoneOffset zoneOffset, DateTimeFormatter dateTimeFormatter) {
-        return new Date(ZonedDateTime.now(zoneOffset).format(dateTimeFormatter));
+    public String getDateISO8601(ZoneOffset zoneOffset, DateTimeFormatter dateTimeFormatter) {
+        return ZonedDateTime.now(zoneOffset).format(dateTimeFormatter);
     }
 }
