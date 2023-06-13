@@ -10,6 +10,7 @@ import com.cls.model.entity.commons.AdditionalOperationEntity;
 import com.cls.model.dto.commons.AdditionalFee;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -20,27 +21,25 @@ import java.util.Objects;
 @Component
 public class FeeCalculator {
 
-    public Integer calculateFee(List<ViewFee> feeBasic, Integer totalKms) {
-        System.out.println("totalKms: " + totalKms);
-        System.out.println("feeBasic.isEmpty(): " + feeBasic.isEmpty());
-        Integer feePrice = 0;
-        if (totalKms != null && totalKms > 0 && !feeBasic.isEmpty()) {
-            ViewFee firstFee = feeBasic.get(0);
-            feePrice = firstFee.getFeePrice() + (firstFee.getFeePriceXKm() * totalKms);
+    public BigDecimal calculateFee(ViewFee feeBasic, Integer totalKms) {
+        BigDecimal feePrice = new BigDecimal(0);
+        if (totalKms != null && totalKms > 0) {
+            feePrice = BigDecimal.valueOf(feeBasic.getFeePriceXKm()).multiply(BigDecimal.valueOf(totalKms));
         }
+        feePrice=feePrice.add(BigDecimal.valueOf(feeBasic.getFeePrice()));
         System.out.println("feePrice: " + feePrice);
         return feePrice;
     }
 
-    public Integer calculateTotalAdditionalOperationsFee(List<AdditionalFee> operativeAdditionalsRequest, List<AdditionalOperation> operativeAdditionalsDataBase) {
-        int totalStandardFee = 0;
+    public BigDecimal calculateTotalAdditionalOperationsFee(List<AdditionalFee> operativeAdditionalsRequest, List<AdditionalOperation> operativeAdditionalsDataBase) {
+        BigDecimal totalStandardFee = new BigDecimal(0);
         for (AdditionalOperation additionalOperation : operativeAdditionalsDataBase) {
             if (additionalOperation.getOperationId() == 1) {
-                totalStandardFee += additionalOperation.getPrice();
+                totalStandardFee=totalStandardFee.add(BigDecimal.valueOf(additionalOperation.getPrice()));
             } else {
                 for (AdditionalFee additionalFee : operativeAdditionalsRequest) {
                     if (Objects.equals(additionalFee.getCode(), additionalOperation.getId())) {
-                        totalStandardFee += additionalFee.getAmount() * additionalOperation.getPrice();
+                        totalStandardFee=totalStandardFee.add(BigDecimal.valueOf(additionalFee.getAmount()).multiply(BigDecimal.valueOf(additionalOperation.getPrice())));
                         operativeAdditionalsRequest.remove(additionalFee);
                         break;
                     }
@@ -51,15 +50,15 @@ public class FeeCalculator {
         return totalStandardFee;
     }
 
-    public Integer calculateTotalAdditionalStandardsFee(List<AdditionalFee> standardAdditionalsRequest, List<AdditionalStandard> standardAdditionalsDataBase) {
-        int totalStandardFee = 0;
+    public BigDecimal calculateTotalAdditionalStandardsFee(List<AdditionalFee> standardAdditionalsRequest, List<AdditionalStandard> standardAdditionalsDataBase) {
+        BigDecimal totalStandardFee = new BigDecimal(0);
         for (AdditionalStandard additionalStandard : standardAdditionalsDataBase) {
             if (additionalStandard.getOperationId() == 1) {
-                totalStandardFee += additionalStandard.getPrice();
+                totalStandardFee=totalStandardFee.add(BigDecimal.valueOf(additionalStandard.getPrice()));
             } else {
                 for (AdditionalFee additionalFee : standardAdditionalsRequest) {
                     if (Objects.equals(additionalFee.getCode(), additionalStandard.getId())) {
-                        totalStandardFee += additionalFee.getAmount() * additionalStandard.getPrice();
+                        totalStandardFee=totalStandardFee.add(BigDecimal.valueOf(additionalFee.getAmount()).multiply(BigDecimal.valueOf(additionalStandard.getPrice())));
                         standardAdditionalsRequest.remove(additionalFee);
                         break;
                     }
@@ -70,8 +69,8 @@ public class FeeCalculator {
         return totalStandardFee;
     }
 
-    public Integer calculateTotalFee(int baseFee, int standardFee, int operativeFee) {
-        return baseFee + standardFee + operativeFee;
+    public BigDecimal calculateTotalFee(BigDecimal baseFee, BigDecimal standardFee, BigDecimal operativeFee) {
+        return baseFee.add(standardFee.add(operativeFee));
     }
 
     public Date getDateISO8601(ZoneOffset zoneOffset, DateTimeFormatter dateTimeFormatter) {
