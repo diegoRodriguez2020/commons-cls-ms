@@ -1,5 +1,7 @@
 server:
   port: 8080
+  servlet:
+    context-path: /commons_cls
 
 spring:
   datasource:
@@ -19,4 +21,29 @@ spring:
   application:
     name: "userManagement"
 
+springdoc:
+  api-docs:
+    path: /srv-commons_cls-openapi
 
+bolivar:
+  api:
+    doc:
+      apiTitle: API operaciones Centro Logístico de Servicios
+      apiDescription: API definida para el dominio commons-cls-ms
+      api-terms-of-service: ""
+      apiContact:
+        name: Johan Terranova
+        email:  johan.terranova@segurosbolivar.com
+      api-license:
+        name: Apache 2.0
+        url: http://www.apache.org/licenses/LICENSE-2.0.html
+      apiVersion: 1.0.0
+      apiServers:
+        - url: http://localhost:8080/commons_cls
+          description: Servidor local
+        - url: https://fz73xehwah.execute-api.us-east-1.amazonaws.com/dev/commons_cls
+          description: Servidor de Desarrollo
+        - url: https://c4huz7dmpc-vpce-0d1e15f4e7cf53d97.execute-api.us-east-1.amazonaws.com/stage/commons_cls
+          description: Servidor de Stage
+        - url: https://03l44gahq8-vpce-0316f1f34c146e45d.execute-api.us-east-1.amazonaws.com/prod/commons_cls
+          description: Servidor de Producción

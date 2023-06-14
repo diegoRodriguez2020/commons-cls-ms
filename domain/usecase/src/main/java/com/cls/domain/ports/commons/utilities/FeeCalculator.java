@@ -69,8 +69,4 @@ public class FeeCalculator {
     public BigDecimal calculateTotalFee(BigDecimal baseFee, BigDecimal standardFee, BigDecimal operativeFee) {
         return baseFee.add(standardFee.add(operativeFee));
     }
-
-    public Date getDateISO8601(ZoneOffset zoneOffset, DateTimeFormatter dateTimeFormatter) {
-        return new Date(ZonedDateTime.now(zoneOffset).format(dateTimeFormatter));
-    }
 }
