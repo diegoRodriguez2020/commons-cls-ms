@@ -23,7 +23,7 @@ public class AddFee {
     }
 
     @PostMapping (path = "/tarifa", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<AddFeeResponse> addFee(@RequestBody @Valid AddFeeRequest addFeeRequest) {
+    public ResponseEntity<AddFeeResponse> getFeeAdded(@RequestBody @Valid AddFeeRequest addFeeRequest) {
         return ResponseEntity.ok(addFeeManagement.calculateFee(addFeeRequest));
     }
 }

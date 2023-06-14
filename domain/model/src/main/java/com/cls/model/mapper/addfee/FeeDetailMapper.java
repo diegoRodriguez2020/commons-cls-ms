@@ -17,4 +17,8 @@ public class FeeDetailMapper {
     public FeeDetailEntity dtoToEntity (FeeDetail dto) {
         return modelMapper.map(dto, FeeDetailEntity.class);
     }
+
+    public FeeDetail entityToDto (FeeDetailEntity entity) {
+        return modelMapper.map(entity, FeeDetail.class);
+    }
 }
