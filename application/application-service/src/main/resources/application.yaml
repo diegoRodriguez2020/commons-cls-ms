@@ -1,5 +1,7 @@
 server:
   port: 8080
+  servlet:
+    context-path: /commons_cls
 
 spring:
   datasource:
@@ -26,7 +28,7 @@ springdoc:
 bolivar:
   api:
     doc:
-      apiTitle: API operaciones Centro Logistico de Servicios
+      apiTitle: API operaciones Centro Logístico de Servicios
       apiDescription: API definida para el dominio commons-cls-ms
       api-terms-of-service: ""
       apiContact:

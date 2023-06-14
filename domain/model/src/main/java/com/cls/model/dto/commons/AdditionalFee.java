@@ -10,8 +10,8 @@ import lombok.ToString;
 @ToString
 @Schema(name = "BasicFee")
 public class AdditionalFee {
-    @Schema(name = "code", description = "Indica el código del servicio adicional que será consultado")
+    @Schema(name = "code", description = "Indica el código del servicio adicional que será consultado", example = "5", type = "Integer")
     Integer code;
-    @Schema(name = "amount", description = "Indica la cantidad de veces que fue usado el servicio adicional que será consultado")
+    @Schema(name = "amount", description = "Indica la cantidad de veces que fue usado el servicio adicional que será consultado", example = "10", type = "Integer")
     Integer amount;
 }
