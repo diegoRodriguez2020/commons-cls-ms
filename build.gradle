@@ -82,6 +82,8 @@ subprojects {
 		implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
 		implementation(group: 'com.bolivar.api.doc', name: 'bolivar-core-api-doc-starter', version: '1.0.1.RELEASE')
 		implementation 'io.swagger.core.v3:swagger-annotations:2.1.10'
+		implementation (group: 'com.bolivar.error.handling', name: 'bolivar-core-error-handling-starter', version: '1.0.1.RELEASE')
+
 	}
 }
 
