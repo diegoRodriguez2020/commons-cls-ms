@@ -12,14 +12,9 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ActualizarTarifaAdicionalesRequest {
-    private String ramoCodigoSiab;
-    private String productoCodigoSiab;
-    private Integer causaCodigoSiab;
-    private Integer originDestinationId;
-    private Integer ciudadCodigoSiab;
-    private Integer totalKms;
-    private Integer feeId;
+public class UpdateFeeRequest {
+
+    private int authorizationNumber;
     private List<AdditionalFee> standardAdditional;
     private List<AdditionalFee> operativeAdditional;
 }
