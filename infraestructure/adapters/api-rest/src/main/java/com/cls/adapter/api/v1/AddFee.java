@@ -1,6 +1,7 @@
 package com.cls.adapter.api.v1;
 
 
+import com.bolivar.error.handling.model.ExceptionModel;
 import com.cls.domain.ports.addfee.in.AddFeeManagement;
 import com.cls.model.request.addfee.AddFeeRequest;
 import com.cls.model.response.addfee.AddFeeResponse;
@@ -31,8 +32,8 @@ public class AddFee {
             summary = "Realiza el cáculo de la tarifa inicial del servicio y lo almacena en la tabla fee_detail")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Se muestra cuando ha ocurrido una operación exitosa", content = @Content(schema = @Schema(implementation = AddFeeResponse.class))),
-            @ApiResponse(responseCode = "400", description = "Se muestra cuando ha ocurrido un error relacionado a negocio", content = @Content(schema = @Schema(implementation = AddFeeResponse.class))),
-            @ApiResponse(responseCode = "500", description = "Se muestra cuando ha ocurrido un error relacionado a infraestructura ", content = @Content(schema = @Schema(implementation = AddFeeResponse.class)))
+            @ApiResponse(responseCode = "400", description = "Se muestra cuando ha ocurrido un error relacionado a negocio", content = @Content(schema = @Schema(implementation = ExceptionModel.class))),
+            @ApiResponse(responseCode = "500", description = "Se muestra cuando ha ocurrido un error relacionado a infraestructura ", content = @Content(schema = @Schema(implementation = ExceptionModel.class)))
     })
     public ResponseEntity<AddFeeResponse> getFeeAdded(@RequestBody @Valid AddFeeRequest addFeeRequest) {
         return ResponseEntity.ok(addFeeManagement.calculateFee(addFeeRequest));
