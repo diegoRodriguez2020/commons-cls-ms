@@ -3,6 +3,7 @@ package com.cls.domain.ports.updatefee;
 
 import com.cls.domain.ports.addfee.out.FeeDetailRepository;
 import com.cls.domain.ports.addfee.out.ViewFeeRepository;
+import com.cls.domain.ports.commons.utilities.Utilities;
 import com.cls.domain.ports.updatefee.in.UpdateFeeManagement;
 import com.cls.domain.ports.updatefee.out.AdditionalStandardsRepository;
 import com.cls.domain.ports.updatefee.out.AddtionalOperationsRepository;
@@ -42,8 +43,10 @@ public class UpdateFeeManagementImpl implements UpdateFeeManagement {
     private FeeDetailMapper feeDetailMapper;
     private FeeCalculator feeCalculator;
 
+    private Utilities utilities;
 
-    public UpdateFeeManagementImpl(ViewFeeRepository viewFeeRepository, FeeCalculator feeCalculator, AdditionalStandardsRepository additionalStandardsRepository, AddtionalOperationsRepository addtionalOperationsRepository, ViewFeeMapper viewFeeMapper, AdditionalStandardMapper additionalStandardMapper, AdditionalOperationMapper additionalOperationMapper, FeeDetailRepository feeDetailRepository, FeeDetailMapper feeDetailMapper) {
+
+    public UpdateFeeManagementImpl(ViewFeeRepository viewFeeRepository, FeeCalculator feeCalculator, AdditionalStandardsRepository additionalStandardsRepository, AddtionalOperationsRepository addtionalOperationsRepository, ViewFeeMapper viewFeeMapper, AdditionalStandardMapper additionalStandardMapper, AdditionalOperationMapper additionalOperationMapper, FeeDetailRepository feeDetailRepository, FeeDetailMapper feeDetailMapper, Utilities utilities) {
         this.viewFeeRepository = viewFeeRepository;
         this.feeCalculator = feeCalculator;
         this.additionalStandardsRepository = additionalStandardsRepository;
@@ -53,6 +56,7 @@ public class UpdateFeeManagementImpl implements UpdateFeeManagement {
         this.additionalStandardMapper = additionalStandardMapper;
         this.additionalOperationMapper = additionalOperationMapper;
         this.feeDetailMapper = feeDetailMapper;
+        this.utilities = utilities;
     }
 
     @Override
@@ -72,7 +76,7 @@ public class UpdateFeeManagementImpl implements UpdateFeeManagement {
         feeDetail.setFeeAdditionalPrice(feeStandardValue);
         feeDetail.setFeeTotal(totalFeeValue);
         feeDetail.setFeeLog("{actualizado}");
-        feeDetail.setUpdatedAt(new Date());
+        feeDetail.setUpdatedAt(utilities.getDate());
         feeDetailRepository.updateFeeDetail(feeDetailMapper.dtoToEntity(feeDetail));
         return UpdateFeeResponse.builder().authorizationNumber(updateFeeRequest.getAuthorizationNumber()).initialFee(String.valueOf(feeValue)).additionalStandardFee(String.valueOf(feeStandardValue)).additionalOperationsFee(String.valueOf(feeOperationsValue)).totalFee(String.valueOf(totalFeeValue)).build();
 
