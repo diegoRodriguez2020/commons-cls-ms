@@ -3,6 +3,7 @@ package com.cls.domain.ports.addfee;
 import com.cls.domain.ports.addfee.in.AddFeeManagement;
 import com.cls.domain.ports.addfee.out.FeeDetailRepository;
 import com.cls.domain.ports.addfee.out.ViewFeeRepository;
+import com.cls.domain.ports.commons.utilities.Utilities;
 import com.cls.domain.ports.updatefee.out.AdditionalStandardsRepository;
 import com.cls.domain.ports.updatefee.out.AddtionalOperationsRepository;
 import com.cls.domain.ports.commons.utilities.FeeCalculator;
@@ -39,8 +40,10 @@ public class AddFeeManagementImpl implements AddFeeManagement {
     private FeeDetailMapper feeDetailMapper;
     private FeeCalculator feeCalculator;
 
+    private Utilities utilities;
 
-    public AddFeeManagementImpl(ViewFeeRepository viewFeeRepository, FeeCalculator feeCalculator, AdditionalStandardsRepository additionalStandardsRepository, AddtionalOperationsRepository addtionalOperationsRepository, ViewFeeMapper viewFeeMapper, AdditionalStandardMapper additionalStandardMapper, AdditionalOperationMapper additionalOperationMapper, FeeDetailRepository feeDetailRepository, FeeDetailMapper feeDetailMapper) {
+
+    public AddFeeManagementImpl(ViewFeeRepository viewFeeRepository, FeeCalculator feeCalculator, AdditionalStandardsRepository additionalStandardsRepository, AddtionalOperationsRepository addtionalOperationsRepository, ViewFeeMapper viewFeeMapper, AdditionalStandardMapper additionalStandardMapper, AdditionalOperationMapper additionalOperationMapper, FeeDetailRepository feeDetailRepository, FeeDetailMapper feeDetailMapper, Utilities utilities) {
         this.viewFeeRepository = viewFeeRepository;
         this.feeCalculator = feeCalculator;
         this.additionalStandardsRepository = additionalStandardsRepository;
@@ -50,6 +53,7 @@ public class AddFeeManagementImpl implements AddFeeManagement {
         this.additionalStandardMapper = additionalStandardMapper;
         this.additionalOperationMapper = additionalOperationMapper;
         this.feeDetailMapper = feeDetailMapper;
+        this.utilities = utilities;
     }
 
     @Override
@@ -72,13 +76,12 @@ public class AddFeeManagementImpl implements AddFeeManagement {
         feeDetail.setFeeBasicPrice(feeValue);
         feeDetail.setFeeAdditionalPrice(feeStandardValue);
         feeDetail.setFeeTotal(totalFeeValue);
+        feeDetail.setCreatedAt(utilities.getDate());
+        feeDetail.setUpdatedAt(utilities.getDate());
         feeDetail.setFeeLog("{}");
         feeDetailRepository.addFeeDetail(feeDetailMapper.dtoToEntity(feeDetail));
         return AddFeeResponse.builder().authorizationNumber(addFeeRequest.getAuthorizationNumber()).basicFee(String.valueOf(feeValue)).additionalStandardFee(String.valueOf(feeStandardValue)).additionalOperationsFee(String.valueOf(feeOperationsValue)).totalFee(String.valueOf(totalFeeValue)).build();
     }
-
-
-
 
 
 }
