@@ -24,7 +24,6 @@ import com.cls.model.mapper.commons.AdditionalStandardMapper;
 import com.cls.model.request.updatefee.UpdateFeeRequest;
 import com.cls.model.response.addfee.AddFeeResponse;
 import com.cls.model.response.updatefee.UpdateFeeResponse;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -63,57 +62,25 @@ public class UpdateFeeManagementImpl implements UpdateFeeManagement {
 
     @Override
     public UpdateFeeResponse updateFee(UpdateFeeRequest updateFeeRequest) {
-        FeeDetail feeDetail = getFeeDetail(updateFeeRequest);
+        FeeDetailEntity feeDetailEntity = feeDetailRepository.findFeeDetailByAuthorizationNumber(updateFeeRequest.getAuthorizationNumber());
+        FeeDetail feeDetail = feeDetailMapper.entityToDto(feeDetailEntity);
         BigDecimal feeValue = feeDetail.getFeeTotal();
-
-        updateLogsRequest(feeDetail, updateFeeRequest);
-
-        List<AdditionalStandard> additionalStandards = getAdditionalStandards(updateFeeRequest);
-        List<AdditionalOperation> additionalOperations = getAdditionalOperations(updateFeeRequest);
+        LogsRequest logsRequest = utilities.convertStringToJsonLogsRequest(feeDetail.getFeeLog());
+        logsRequest.setUpdateFeeRequest(updateFeeRequest);
+        List<AdditionalStandardEntity> additionalStandardsEntity = additionalStandardsRepository.findStandardsList(updateFeeRequest.getStandardAdditional());
+        List<AdditionalOperationEntity> additionalOperationsEntity = addtionalOperationsRepository.findOperationsList(updateFeeRequest.getOperativeAdditional());
+        List<AdditionalStandard> additionalStandards = additionalStandardMapper.entitiesToDto(additionalStandardsEntity);
+        List<AdditionalOperation> additionalOperations = additionalOperationMapper.entitiesToDto(additionalOperationsEntity);
         BigDecimal feeStandardValue = feeCalculator.calculateTotalAdditionalStandardsFee(updateFeeRequest.getStandardAdditional(), additionalStandards);
         BigDecimal feeOperationsValue = feeCalculator.calculateTotalAdditionalOperationsFee(updateFeeRequest.getOperativeAdditional(), additionalOperations);
 
         BigDecimal totalFeeValue = feeCalculator.calculateTotalFee(feeValue, feeStandardValue, feeOperationsValue);
-        updateFeeDetail(feeDetail, feeStandardValue, totalFeeValue);
-
-        return buildUpdateFeeResponse(updateFeeRequest, feeValue, feeStandardValue, feeOperationsValue, totalFeeValue);
-    }
-
-    private FeeDetail getFeeDetail(UpdateFeeRequest updateFeeRequest) {
-        FeeDetailEntity feeDetailEntity = feeDetailRepository.findFeeDetailByAuthorizationNumber(updateFeeRequest.getAuthorizationNumber());
-        return feeDetailMapper.entityToDto(feeDetailEntity);
-    }
-
-    private List<AdditionalStandard> getAdditionalStandards(UpdateFeeRequest updateFeeRequest) {
-        List<AdditionalStandardEntity> additionalStandardsEntity = additionalStandardsRepository.findStandardsList(updateFeeRequest.getStandardAdditional());
-        return additionalStandardMapper.entitiesToDto(additionalStandardsEntity);
-    }
-
-    private List<AdditionalOperation> getAdditionalOperations(UpdateFeeRequest updateFeeRequest) {
-        List<AdditionalOperationEntity> additionalOperationsEntity = addtionalOperationsRepository.findOperationsList(updateFeeRequest.getOperativeAdditional());
-        return additionalOperationMapper.entitiesToDto(additionalOperationsEntity);
-    }
-
-    private void updateLogsRequest(FeeDetail feeDetail, UpdateFeeRequest updateFeeRequest) {
-        LogsRequest logsRequest = utilities.convertStringToJsonLogsRequest(feeDetail.getFeeLog());
-        logsRequest.setUpdateFeeRequest(updateFeeRequest);
-        feeDetail.setFeeLog(utilities.convertJsonToStringLogsRequest(logsRequest));
-    }
-
-    private void updateFeeDetail(FeeDetail feeDetail, BigDecimal feeStandardValue, BigDecimal totalFeeValue) {
         feeDetail.setFeeAdditionalPrice(feeStandardValue);
         feeDetail.setFeeTotal(totalFeeValue);
+        feeDetail.setFeeLog(utilities.convertJsonToStringLogsRequest(logsRequest));
         feeDetail.setUpdatedAt(utilities.getDate());
         feeDetailRepository.updateFeeDetail(feeDetailMapper.dtoToEntity(feeDetail));
-    }
+        return UpdateFeeResponse.builder().authorizationNumber(updateFeeRequest.getAuthorizationNumber()).initialFee(String.valueOf(feeValue)).additionalStandardFee(String.valueOf(feeStandardValue)).additionalOperationsFee(String.valueOf(feeOperationsValue)).totalFee(String.valueOf(totalFeeValue)).build();
 
-    private UpdateFeeResponse buildUpdateFeeResponse(UpdateFeeRequest updateFeeRequest, BigDecimal feeValue, BigDecimal feeStandardValue, BigDecimal feeOperationsValue, BigDecimal totalFeeValue) {
-        return UpdateFeeResponse.builder()
-                .authorizationNumber(updateFeeRequest.getAuthorizationNumber())
-                .initialFee(String.valueOf(feeValue))
-                .additionalStandardFee(String.valueOf(feeStandardValue))
-                .additionalOperationsFee(String.valueOf(feeOperationsValue))
-                .totalFee(String.valueOf(totalFeeValue))
-                .build();
     }
 }
